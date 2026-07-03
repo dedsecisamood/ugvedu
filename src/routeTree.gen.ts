@@ -24,8 +24,10 @@ import { Route as AuthenticatedOverviewRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedNoticesRouteImport } from './routes/_authenticated/notices'
 import { Route as AuthenticatedMyCoursesRouteImport } from './routes/_authenticated/my-courses'
 import { Route as AuthenticatedLabProjectsRouteImport } from './routes/_authenticated/lab-projects'
+import { Route as AuthenticatedFacultyRouteImport } from './routes/_authenticated/faculty'
 import { Route as AuthenticatedCourseMaterialsRouteImport } from './routes/_authenticated/course-materials'
 import { Route as AuthenticatedClassesRouteImport } from './routes/_authenticated/classes'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ApiStudentsIndexRouteImport } from './routes/api/students/index'
 import { Route as ApiRoutineIndexRouteImport } from './routes/api/routine/index'
 import { Route as ApiRegistrationsIndexRouteImport } from './routes/api/registrations/index'
@@ -36,12 +38,21 @@ import { Route as ApiLabProjectsIndexRouteImport } from './routes/api/lab-projec
 import { Route as ApiGradesIndexRouteImport } from './routes/api/grades/index'
 import { Route as ApiCoursesIndexRouteImport } from './routes/api/courses/index'
 import { Route as ApiCourseMaterialsIndexRouteImport } from './routes/api/course-materials/index'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as ApiStudentsIdRouteImport } from './routes/api/students/$id'
 import { Route as ApiRegistrationsIdRouteImport } from './routes/api/registrations/$id'
 import { Route as ApiNoticesIdRouteImport } from './routes/api/notices/$id'
+import { Route as AuthenticatedFacultyBlockedRouteImport } from './routes/_authenticated/faculty.blocked'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
+import { Route as AuthenticatedAdminSemestersRouteImport } from './routes/_authenticated/admin.semesters'
+import { Route as AuthenticatedAdminGradesRouteImport } from './routes/_authenticated/admin.grades'
+import { Route as AuthenticatedAdminGradeScaleRouteImport } from './routes/_authenticated/admin.grade-scale'
+import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
 import { Route as ApiStudentsIdCoursesRouteImport } from './routes/api/students/$id.courses'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as ApiGradesPublishOfferingIdRouteImport } from './routes/api/grades/publish.$offeringId'
+import { Route as AuthenticatedFacultyBlockedStudentUserIdRouteImport } from './routes/_authenticated/faculty.blocked.$studentUserId'
+import { Route as AuthenticatedAdminStudentsNewRouteImport } from './routes/_authenticated/admin.students.new'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -119,6 +130,11 @@ const AuthenticatedLabProjectsRoute =
     path: '/lab-projects',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedFacultyRoute = AuthenticatedFacultyRouteImport.update({
+  id: '/faculty',
+  path: '/faculty',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedCourseMaterialsRoute =
   AuthenticatedCourseMaterialsRouteImport.update({
     id: '/course-materials',
@@ -128,6 +144,11 @@ const AuthenticatedCourseMaterialsRoute =
 const AuthenticatedClassesRoute = AuthenticatedClassesRouteImport.update({
   id: '/classes',
   path: '/classes',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const ApiStudentsIndexRoute = ApiStudentsIndexRouteImport.update({
@@ -180,6 +201,11 @@ const ApiCourseMaterialsIndexRoute = ApiCourseMaterialsIndexRouteImport.update({
   path: '/api/course-materials/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 const ApiStudentsIdRoute = ApiStudentsIdRouteImport.update({
   id: '/api/students/$id',
   path: '/api/students/$id',
@@ -194,6 +220,40 @@ const ApiNoticesIdRoute = ApiNoticesIdRouteImport.update({
   id: '/api/notices/$id',
   path: '/api/notices/$id',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedFacultyBlockedRoute =
+  AuthenticatedFacultyBlockedRouteImport.update({
+    id: '/blocked',
+    path: '/blocked',
+    getParentRoute: () => AuthenticatedFacultyRoute,
+  } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminSemestersRoute =
+  AuthenticatedAdminSemestersRouteImport.update({
+    id: '/semesters',
+    path: '/semesters',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminGradesRoute =
+  AuthenticatedAdminGradesRouteImport.update({
+    id: '/grades',
+    path: '/grades',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminGradeScaleRoute =
+  AuthenticatedAdminGradeScaleRouteImport.update({
+    id: '/grade-scale',
+    path: '/grade-scale',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
 const ApiStudentsIdCoursesRoute = ApiStudentsIdCoursesRouteImport.update({
   id: '/courses',
@@ -212,13 +272,27 @@ const ApiGradesPublishOfferingIdRoute =
     path: '/api/grades/publish/$offeringId',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AuthenticatedFacultyBlockedStudentUserIdRoute =
+  AuthenticatedFacultyBlockedStudentUserIdRouteImport.update({
+    id: '/$studentUserId',
+    path: '/$studentUserId',
+    getParentRoute: () => AuthenticatedFacultyBlockedRoute,
+  } as any)
+const AuthenticatedAdminStudentsNewRoute =
+  AuthenticatedAdminStudentsNewRouteImport.update({
+    id: '/students/new',
+    path: '/students/new',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/classes': typeof AuthenticatedClassesRoute
   '/course-materials': typeof AuthenticatedCourseMaterialsRoute
+  '/faculty': typeof AuthenticatedFacultyRouteWithChildren
   '/lab-projects': typeof AuthenticatedLabProjectsRoute
   '/my-courses': typeof AuthenticatedMyCoursesRoute
   '/notices': typeof AuthenticatedNoticesRoute
@@ -230,9 +304,16 @@ export interface FileRoutesByFullPath {
   '/routine': typeof AuthenticatedRoutineRoute
   '/api/health': typeof ApiHealthRoute
   '/pay/checkout': typeof PayCheckoutRoute
+  '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/grade-scale': typeof AuthenticatedAdminGradeScaleRoute
+  '/admin/grades': typeof AuthenticatedAdminGradesRoute
+  '/admin/semesters': typeof AuthenticatedAdminSemestersRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/faculty/blocked': typeof AuthenticatedFacultyBlockedRouteWithChildren
   '/api/notices/$id': typeof ApiNoticesIdRoute
   '/api/registrations/$id': typeof ApiRegistrationsIdRoute
   '/api/students/$id': typeof ApiStudentsIdRouteWithChildren
+  '/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/course-materials/': typeof ApiCourseMaterialsIndexRoute
   '/api/courses/': typeof ApiCoursesIndexRoute
   '/api/grades/': typeof ApiGradesIndexRoute
@@ -243,6 +324,8 @@ export interface FileRoutesByFullPath {
   '/api/registrations/': typeof ApiRegistrationsIndexRoute
   '/api/routine/': typeof ApiRoutineIndexRoute
   '/api/students/': typeof ApiStudentsIndexRoute
+  '/admin/students/new': typeof AuthenticatedAdminStudentsNewRoute
+  '/faculty/blocked/$studentUserId': typeof AuthenticatedFacultyBlockedStudentUserIdRoute
   '/api/grades/publish/$offeringId': typeof ApiGradesPublishOfferingIdRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/api/students/$id/courses': typeof ApiStudentsIdCoursesRoute
@@ -253,6 +336,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/classes': typeof AuthenticatedClassesRoute
   '/course-materials': typeof AuthenticatedCourseMaterialsRoute
+  '/faculty': typeof AuthenticatedFacultyRouteWithChildren
   '/lab-projects': typeof AuthenticatedLabProjectsRoute
   '/my-courses': typeof AuthenticatedMyCoursesRoute
   '/notices': typeof AuthenticatedNoticesRoute
@@ -264,9 +348,16 @@ export interface FileRoutesByTo {
   '/routine': typeof AuthenticatedRoutineRoute
   '/api/health': typeof ApiHealthRoute
   '/pay/checkout': typeof PayCheckoutRoute
+  '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/grade-scale': typeof AuthenticatedAdminGradeScaleRoute
+  '/admin/grades': typeof AuthenticatedAdminGradesRoute
+  '/admin/semesters': typeof AuthenticatedAdminSemestersRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/faculty/blocked': typeof AuthenticatedFacultyBlockedRouteWithChildren
   '/api/notices/$id': typeof ApiNoticesIdRoute
   '/api/registrations/$id': typeof ApiRegistrationsIdRoute
   '/api/students/$id': typeof ApiStudentsIdRouteWithChildren
+  '/admin': typeof AuthenticatedAdminIndexRoute
   '/api/course-materials': typeof ApiCourseMaterialsIndexRoute
   '/api/courses': typeof ApiCoursesIndexRoute
   '/api/grades': typeof ApiGradesIndexRoute
@@ -277,6 +368,8 @@ export interface FileRoutesByTo {
   '/api/registrations': typeof ApiRegistrationsIndexRoute
   '/api/routine': typeof ApiRoutineIndexRoute
   '/api/students': typeof ApiStudentsIndexRoute
+  '/admin/students/new': typeof AuthenticatedAdminStudentsNewRoute
+  '/faculty/blocked/$studentUserId': typeof AuthenticatedFacultyBlockedStudentUserIdRoute
   '/api/grades/publish/$offeringId': typeof ApiGradesPublishOfferingIdRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/api/students/$id/courses': typeof ApiStudentsIdCoursesRoute
@@ -287,8 +380,10 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/classes': typeof AuthenticatedClassesRoute
   '/_authenticated/course-materials': typeof AuthenticatedCourseMaterialsRoute
+  '/_authenticated/faculty': typeof AuthenticatedFacultyRouteWithChildren
   '/_authenticated/lab-projects': typeof AuthenticatedLabProjectsRoute
   '/_authenticated/my-courses': typeof AuthenticatedMyCoursesRoute
   '/_authenticated/notices': typeof AuthenticatedNoticesRoute
@@ -300,9 +395,16 @@ export interface FileRoutesById {
   '/_authenticated/routine': typeof AuthenticatedRoutineRoute
   '/api/health': typeof ApiHealthRoute
   '/pay/checkout': typeof PayCheckoutRoute
+  '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/_authenticated/admin/grade-scale': typeof AuthenticatedAdminGradeScaleRoute
+  '/_authenticated/admin/grades': typeof AuthenticatedAdminGradesRoute
+  '/_authenticated/admin/semesters': typeof AuthenticatedAdminSemestersRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
+  '/_authenticated/faculty/blocked': typeof AuthenticatedFacultyBlockedRouteWithChildren
   '/api/notices/$id': typeof ApiNoticesIdRoute
   '/api/registrations/$id': typeof ApiRegistrationsIdRoute
   '/api/students/$id': typeof ApiStudentsIdRouteWithChildren
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/api/course-materials/': typeof ApiCourseMaterialsIndexRoute
   '/api/courses/': typeof ApiCoursesIndexRoute
   '/api/grades/': typeof ApiGradesIndexRoute
@@ -313,6 +415,8 @@ export interface FileRoutesById {
   '/api/registrations/': typeof ApiRegistrationsIndexRoute
   '/api/routine/': typeof ApiRoutineIndexRoute
   '/api/students/': typeof ApiStudentsIndexRoute
+  '/_authenticated/admin/students/new': typeof AuthenticatedAdminStudentsNewRoute
+  '/_authenticated/faculty/blocked/$studentUserId': typeof AuthenticatedFacultyBlockedStudentUserIdRoute
   '/api/grades/publish/$offeringId': typeof ApiGradesPublishOfferingIdRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/api/students/$id/courses': typeof ApiStudentsIdCoursesRoute
@@ -323,8 +427,10 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/reset-password'
+    | '/admin'
     | '/classes'
     | '/course-materials'
+    | '/faculty'
     | '/lab-projects'
     | '/my-courses'
     | '/notices'
@@ -336,9 +442,16 @@ export interface FileRouteTypes {
     | '/routine'
     | '/api/health'
     | '/pay/checkout'
+    | '/admin/audit'
+    | '/admin/grade-scale'
+    | '/admin/grades'
+    | '/admin/semesters'
+    | '/admin/users'
+    | '/faculty/blocked'
     | '/api/notices/$id'
     | '/api/registrations/$id'
     | '/api/students/$id'
+    | '/admin/'
     | '/api/course-materials/'
     | '/api/courses/'
     | '/api/grades/'
@@ -349,6 +462,8 @@ export interface FileRouteTypes {
     | '/api/registrations/'
     | '/api/routine/'
     | '/api/students/'
+    | '/admin/students/new'
+    | '/faculty/blocked/$studentUserId'
     | '/api/grades/publish/$offeringId'
     | '/api/public/payments/webhook'
     | '/api/students/$id/courses'
@@ -359,6 +474,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/classes'
     | '/course-materials'
+    | '/faculty'
     | '/lab-projects'
     | '/my-courses'
     | '/notices'
@@ -370,9 +486,16 @@ export interface FileRouteTypes {
     | '/routine'
     | '/api/health'
     | '/pay/checkout'
+    | '/admin/audit'
+    | '/admin/grade-scale'
+    | '/admin/grades'
+    | '/admin/semesters'
+    | '/admin/users'
+    | '/faculty/blocked'
     | '/api/notices/$id'
     | '/api/registrations/$id'
     | '/api/students/$id'
+    | '/admin'
     | '/api/course-materials'
     | '/api/courses'
     | '/api/grades'
@@ -383,6 +506,8 @@ export interface FileRouteTypes {
     | '/api/registrations'
     | '/api/routine'
     | '/api/students'
+    | '/admin/students/new'
+    | '/faculty/blocked/$studentUserId'
     | '/api/grades/publish/$offeringId'
     | '/api/public/payments/webhook'
     | '/api/students/$id/courses'
@@ -392,8 +517,10 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/reset-password'
+    | '/_authenticated/admin'
     | '/_authenticated/classes'
     | '/_authenticated/course-materials'
+    | '/_authenticated/faculty'
     | '/_authenticated/lab-projects'
     | '/_authenticated/my-courses'
     | '/_authenticated/notices'
@@ -405,9 +532,16 @@ export interface FileRouteTypes {
     | '/_authenticated/routine'
     | '/api/health'
     | '/pay/checkout'
+    | '/_authenticated/admin/audit'
+    | '/_authenticated/admin/grade-scale'
+    | '/_authenticated/admin/grades'
+    | '/_authenticated/admin/semesters'
+    | '/_authenticated/admin/users'
+    | '/_authenticated/faculty/blocked'
     | '/api/notices/$id'
     | '/api/registrations/$id'
     | '/api/students/$id'
+    | '/_authenticated/admin/'
     | '/api/course-materials/'
     | '/api/courses/'
     | '/api/grades/'
@@ -418,6 +552,8 @@ export interface FileRouteTypes {
     | '/api/registrations/'
     | '/api/routine/'
     | '/api/students/'
+    | '/_authenticated/admin/students/new'
+    | '/_authenticated/faculty/blocked/$studentUserId'
     | '/api/grades/publish/$offeringId'
     | '/api/public/payments/webhook'
     | '/api/students/$id/courses'
@@ -554,6 +690,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedLabProjectsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/faculty': {
+      id: '/_authenticated/faculty'
+      path: '/faculty'
+      fullPath: '/faculty'
+      preLoaderRoute: typeof AuthenticatedFacultyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/course-materials': {
       id: '/_authenticated/course-materials'
       path: '/course-materials'
@@ -566,6 +709,13 @@ declare module '@tanstack/react-router' {
       path: '/classes'
       fullPath: '/classes'
       preLoaderRoute: typeof AuthenticatedClassesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/api/students/': {
@@ -638,6 +788,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiCourseMaterialsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/api/students/$id': {
       id: '/api/students/$id'
       path: '/api/students/$id'
@@ -658,6 +815,48 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/notices/$id'
       preLoaderRoute: typeof ApiNoticesIdRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/faculty/blocked': {
+      id: '/_authenticated/faculty/blocked'
+      path: '/blocked'
+      fullPath: '/faculty/blocked'
+      preLoaderRoute: typeof AuthenticatedFacultyBlockedRouteImport
+      parentRoute: typeof AuthenticatedFacultyRoute
+    }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/semesters': {
+      id: '/_authenticated/admin/semesters'
+      path: '/semesters'
+      fullPath: '/admin/semesters'
+      preLoaderRoute: typeof AuthenticatedAdminSemestersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/grades': {
+      id: '/_authenticated/admin/grades'
+      path: '/grades'
+      fullPath: '/admin/grades'
+      preLoaderRoute: typeof AuthenticatedAdminGradesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/grade-scale': {
+      id: '/_authenticated/admin/grade-scale'
+      path: '/grade-scale'
+      fullPath: '/admin/grade-scale'
+      preLoaderRoute: typeof AuthenticatedAdminGradeScaleRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/audit': {
+      id: '/_authenticated/admin/audit'
+      path: '/audit'
+      fullPath: '/admin/audit'
+      preLoaderRoute: typeof AuthenticatedAdminAuditRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
     }
     '/api/students/$id/courses': {
       id: '/api/students/$id/courses'
@@ -680,12 +879,78 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiGradesPublishOfferingIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/faculty/blocked/$studentUserId': {
+      id: '/_authenticated/faculty/blocked/$studentUserId'
+      path: '/$studentUserId'
+      fullPath: '/faculty/blocked/$studentUserId'
+      preLoaderRoute: typeof AuthenticatedFacultyBlockedStudentUserIdRouteImport
+      parentRoute: typeof AuthenticatedFacultyBlockedRoute
+    }
+    '/_authenticated/admin/students/new': {
+      id: '/_authenticated/admin/students/new'
+      path: '/students/new'
+      fullPath: '/admin/students/new'
+      preLoaderRoute: typeof AuthenticatedAdminStudentsNewRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
   }
 }
 
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
+  AuthenticatedAdminGradeScaleRoute: typeof AuthenticatedAdminGradeScaleRoute
+  AuthenticatedAdminGradesRoute: typeof AuthenticatedAdminGradesRoute
+  AuthenticatedAdminSemestersRoute: typeof AuthenticatedAdminSemestersRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminStudentsNewRoute: typeof AuthenticatedAdminStudentsNewRoute
+}
+
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
+  AuthenticatedAdminGradeScaleRoute: AuthenticatedAdminGradeScaleRoute,
+  AuthenticatedAdminGradesRoute: AuthenticatedAdminGradesRoute,
+  AuthenticatedAdminSemestersRoute: AuthenticatedAdminSemestersRoute,
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminStudentsNewRoute: AuthenticatedAdminStudentsNewRoute,
+}
+
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
+
+interface AuthenticatedFacultyBlockedRouteChildren {
+  AuthenticatedFacultyBlockedStudentUserIdRoute: typeof AuthenticatedFacultyBlockedStudentUserIdRoute
+}
+
+const AuthenticatedFacultyBlockedRouteChildren: AuthenticatedFacultyBlockedRouteChildren =
+  {
+    AuthenticatedFacultyBlockedStudentUserIdRoute:
+      AuthenticatedFacultyBlockedStudentUserIdRoute,
+  }
+
+const AuthenticatedFacultyBlockedRouteWithChildren =
+  AuthenticatedFacultyBlockedRoute._addFileChildren(
+    AuthenticatedFacultyBlockedRouteChildren,
+  )
+
+interface AuthenticatedFacultyRouteChildren {
+  AuthenticatedFacultyBlockedRoute: typeof AuthenticatedFacultyBlockedRouteWithChildren
+}
+
+const AuthenticatedFacultyRouteChildren: AuthenticatedFacultyRouteChildren = {
+  AuthenticatedFacultyBlockedRoute:
+    AuthenticatedFacultyBlockedRouteWithChildren,
+}
+
+const AuthenticatedFacultyRouteWithChildren =
+  AuthenticatedFacultyRoute._addFileChildren(AuthenticatedFacultyRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
   AuthenticatedClassesRoute: typeof AuthenticatedClassesRoute
   AuthenticatedCourseMaterialsRoute: typeof AuthenticatedCourseMaterialsRoute
+  AuthenticatedFacultyRoute: typeof AuthenticatedFacultyRouteWithChildren
   AuthenticatedLabProjectsRoute: typeof AuthenticatedLabProjectsRoute
   AuthenticatedMyCoursesRoute: typeof AuthenticatedMyCoursesRoute
   AuthenticatedNoticesRoute: typeof AuthenticatedNoticesRoute
@@ -698,8 +963,10 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
   AuthenticatedClassesRoute: AuthenticatedClassesRoute,
   AuthenticatedCourseMaterialsRoute: AuthenticatedCourseMaterialsRoute,
+  AuthenticatedFacultyRoute: AuthenticatedFacultyRouteWithChildren,
   AuthenticatedLabProjectsRoute: AuthenticatedLabProjectsRoute,
   AuthenticatedMyCoursesRoute: AuthenticatedMyCoursesRoute,
   AuthenticatedNoticesRoute: AuthenticatedNoticesRoute,
