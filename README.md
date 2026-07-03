@@ -226,3 +226,55 @@ asking. **Correct anything before we move on to schema design.**
 2. Design the domain schema: `departments`, `courses`, `enrollments`,
    `semesters`, `results`, `notices`, `payments`.
 3. Build the auth pages under `_authenticated/` and the sign-in flow.
+
+---
+
+## Demo dataset (seed)
+
+Rebuild the demo dataset any time with:
+
+```bash
+npm run db:reset        # local (needs $DATABASE_URL)
+# On Lovable Cloud: run scripts/seed.sql via the SQL runner.
+```
+
+**Contents** — see `scripts/seed.sql`:
+
+- **Departments**: CSE, EEE (BBA left in place).
+- **Semesters**: 1st Spring 2025 → 4th Spring 2026 (4th is current).
+- **15 students** across CSE (8) and EEE (7), spread over sems 1–4:
+  - `12521076` *Reshan* — **BLOCKED** by F in `0613-1103` Structured Programming.
+  - `12521079` *Nusrat Jahan* — **CLEAN** semester (SGPA 3.20).
+  - `12521080` *Fahim Hasan* — **RETAKE**: failed `0613-1103` in sem 1,
+    re-enrolled in sem 2 (new grade B). Sem 2 SGPA 2.98.
+  - `12521081` *Rifat Islam* — **INCOMPLETE (I)** in `0611-1303`, sem 3 BLOCKED.
+  - Remaining 11 students have normal generated results.
+- **1 department head** (`head.cse@ugv.edu.bd`, CSE) and **1 admin**
+  (`admin@ugv.edu.bd`). All demo passwords: `DemoPass123!`.
+- **5 notices** — 1 pinned university-wide, 2 dept-scoped (CSE / EEE), 2 general.
+- **Payments** — every student has a semester payment; one **PAID**,
+  one **OVERDUE** (Reshan), one **PARTIAL** (Fahim).
+
+### Retake policy (assumption — confirm with UGV registrar)
+
+**REPLACE**: when a course is retaken, the new grade fully replaces the old
+for CGPA math. The original failing enrollment row is retained for the audit
+trail with `enrollments.status = 'RETAKE'` and is **excluded** from SGPA/CGPA
+sums. The alternative — keep the F in CGPA and add the new grade alongside —
+is not implemented; flip the seed and the SGPA aggregation query in
+`scripts/seed.sql` if UGV's actual policy differs.
+
+### GPA verification (spot check)
+
+Credit-weighted SGPA = `Σ(credits × grade_point) / Σ(credits)`.
+Example — Nusrat, semester 2:
+
+| Course | Cr | Letter | GP | Points |
+|---|---:|---|---:|---:|
+| 0611-1201 Data Structures | 3 | A | 3.75 | 11.25 |
+| 0611-1202 DS Sessional | 1 | A- | 3.50 | 3.50 |
+| 0611-1203 OOP | 3 | B | 3.00 | 9.00 |
+| 0611-1204 Math II | 3 | B- | 2.75 | 8.25 |
+| **Total** | **10** | | | **32.00** |
+
+SGPA = 32.00 / 10 = **3.20** ✓ (matches `semester_results.sgpa`).
