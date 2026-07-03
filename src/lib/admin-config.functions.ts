@@ -143,11 +143,15 @@ const auditQuerySchema = z.object({
   limit: z.number().int().min(1).max(200).default(100),
 });
 
+// Use `any` for the JSON payload — TanStack's server-fn serializer rejects
+// index signatures typed as `unknown`, and the audit changes column is Json.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AuditChangesJson = any;
 export type AuditRow = {
   id: string; createdAt: string; userId: string | null; action: string;
   entityType: string; entityId: string;
   actor: { fullName: string | null; email: string | null } | null;
-  changes: unknown;
+  changes: AuditChangesJson;
 };
 
 export const listAuditLog = createServerFn({ method: "GET" })
