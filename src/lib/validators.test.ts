@@ -25,7 +25,7 @@ describe("emailSchema", () => {
     expect(emailSchema.safeParse("nope@").success).toBe(false);
   });
   it("rejects an email longer than 320 chars", () => {
-    const long = "a".repeat(315) + "@x.io";
+    const long = "a".repeat(316) + "@x.io"; // 321 chars > 320 cap
     expect(emailSchema.safeParse(long).success).toBe(false);
   });
 });
