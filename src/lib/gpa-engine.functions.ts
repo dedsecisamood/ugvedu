@@ -11,7 +11,6 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { z } from "zod";
 import {
   calculateSemesterResult,
-  calculateCGPA,
   type EnrollmentInput,
 } from "./gpa-engine";
 
@@ -20,10 +19,25 @@ const paramsSchema = z.object({
   semesterId: z.string().uuid(),
 });
 
+interface EnrollmentRow {
+  id: string;
+  status: string | null;
+  course_offerings: {
+    semester_id: string;
+    courses: { credits: number | string };
+  } | null;
+  grades: Array<{
+    letter_grade: string | null;
+    grade_point: number | string | null;
+    is_incomplete: boolean | null;
+    is_fail: boolean | null;
+  }> | null;
+}
+
 /**
- * Admin / department-head / registrar triggered recalculation for a single
- * (student, semester) pair. Idempotent: re-running with unchanged grades
- * produces the identical stored row.
+ * Recalculate one (student, semester) result. Only admin / registrar /
+ * department_head may trigger this — typically after resolving an F/I.
+ * Idempotent: re-running with unchanged grades produces the identical row.
  */
 export const recalculateSemesterResult = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -31,7 +45,6 @@ export const recalculateSemesterResult = createServerFn({ method: "POST" })
   .handler(async ({ context, data }) => {
     const { supabase, userId } = context;
 
-    // Role check. Students may not recalc; only admin/registrar/department_head.
     const { data: roleRows } = await supabase
       .from("user_roles")
       .select("role")
@@ -41,91 +54,53 @@ export const recalculateSemesterResult = createServerFn({ method: "POST" })
       throw new Error("Forbidden");
     }
 
-    const enrollments = await loadEnrollments(supabase, data.studentUserId, data.semesterId);
+    const { data: rows, error } = await supabase
+      .from("enrollments")
+      .select(
+        `id, status,
+         course_offerings!inner ( semester_id, courses!inner ( credits ) ),
+         grades ( letter_grade, grade_point, is_incomplete, is_fail )`,
+      )
+      .eq("student_user_id", data.studentUserId)
+      .eq("course_offerings.semester_id", data.semesterId);
+
+    if (error) throw new Error(error.message);
+
+    const enrollments: EnrollmentInput[] = ((rows ?? []) as unknown as EnrollmentRow[]).map((r) => {
+      const g = r.grades?.[0];
+      return {
+        enrollmentId: r.id,
+        credits: r.course_offerings?.courses.credits ?? 0,
+        gradePoint: g?.grade_point ?? null,
+        letterGrade: g?.letter_grade ?? null,
+        isIncomplete: g?.is_incomplete ?? false,
+        status: (r.status as EnrollmentInput["status"]) ?? "COMPLETED",
+      };
+    });
+
     const result = calculateSemesterResult({
       semesterId: data.semesterId,
       enrollments,
     });
 
+    // EMPTY = no counted enrollments; don't persist, just report.
+    if (result.status === "EMPTY") return { ok: true as const, result, persisted: false };
+
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { error } = await supabaseAdmin.from("semester_results").upsert(
-      {
-        student_user_id: data.studentUserId,
-        semester_id: data.semesterId,
-        status: result.status,
-        sgpa: result.sgpa,
-        total_credits: result.totalCredits,
-        blocked_reason: result.blockedReason,
-        generated_by: userId,
-        generated_at: new Date().toISOString(),
-      },
-      { onConflict: "student_user_id,semester_id" },
-    );
-    if (error) throw new Error(error.message);
+    const { error: upErr } = await supabaseAdmin
+      .from("semester_results")
+      .upsert(
+        {
+          student_user_id: data.studentUserId,
+          semester_id: data.semesterId,
+          status: result.status,          // "GENERATED" | "BLOCKED"
+          sgpa: result.sgpa,               // string | null — Postgres NUMERIC accepts strings
+          blocked_reason: result.blockedReason,
+          calculated_at: new Date().toISOString(),
+        },
+        { onConflict: "student_user_id,semester_id" },
+      );
+    if (upErr) throw new Error(upErr.message);
 
-    return { ok: true as const, result };
+    return { ok: true as const, result, persisted: true };
   });
-
-// ----- helpers -----
-type SupabaseClient = Parameters<typeof requireSupabaseAuth>[0] extends never
-  ? never
-  : never;
-
-async function loadEnrollments(
-  supabase: {
-    from: (t: string) => {
-      select: (s: string) => {
-        eq: (col: string, val: string) => {
-          eq: (col2: string, val2: string) => Promise<{ data: unknown[] | null; error: unknown }>;
-        };
-      };
-    };
-  },
-  studentUserId: string,
-  semesterId: string,
-): Promise<EnrollmentInput[]> {
-  // Enrollment row + course credit + grade information joined server-side.
-  const { data, error } = await (supabase as unknown as {
-    from: (t: string) => {
-      select: (s: string) => {
-        eq: (a: string, b: string) => {
-          eq: (a: string, b: string) => Promise<{ data: EnrollmentRow[] | null; error: { message: string } | null }>;
-        };
-      };
-    };
-  })
-    .from("enrollments")
-    .select(
-      `id, status,
-       course_offerings!inner ( semester_id, courses!inner ( credits ) ),
-       grades ( letter_grade, grade_point, is_incomplete, is_fail )`,
-    )
-    .eq("student_user_id", studentUserId)
-    .eq("course_offerings.semester_id", semesterId);
-
-  if (error) throw new Error(error.message);
-
-  return (data ?? []).map((r) => ({
-    enrollmentId: r.id,
-    credits: r.course_offerings.courses.credits,
-    gradePoint: r.grades?.grade_point ?? null,
-    letterGrade: r.grades?.letter_grade ?? null,
-    isIncomplete: r.grades?.is_incomplete ?? false,
-    status: (r.status as EnrollmentInput["status"]) ?? "COMPLETED",
-  }));
-}
-
-interface EnrollmentRow {
-  id: string;
-  status: string | null;
-  course_offerings: { semester_id: string; courses: { credits: number | string } };
-  grades: {
-    letter_grade: string | null;
-    grade_point: number | string | null;
-    is_incomplete: boolean | null;
-    is_fail: boolean | null;
-  } | null;
-}
-
-export { calculateCGPA }; // re-export for convenience in server routes/pages
-export type { SupabaseClient };
