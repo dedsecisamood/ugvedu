@@ -147,7 +147,7 @@ export type AuditRow = {
   id: string; createdAt: string; userId: string | null; action: string;
   entityType: string; entityId: string;
   actor: { fullName: string | null; email: string | null } | null;
-  changes: Record<string, unknown>;
+  changes: unknown;
 };
 
 export const listAuditLog = createServerFn({ method: "GET" })
