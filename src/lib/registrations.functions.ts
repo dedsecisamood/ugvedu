@@ -54,109 +54,48 @@ export type MyRegistration = {
   } | null;
 };
 
-async function pickRegistrationSemester(
-  supabase: {
-    from: (t: string) => {
-      select: (s: string) => {
-        eq: (k: string, v: unknown) => {
-          maybeSingle: () => Promise<{ data: unknown }>;
-        };
-        not: (k: string, o: string, v: unknown) => {
-          gte: (k: string, v: unknown) => {
-            order: (k: string, o?: { ascending?: boolean }) => {
-              limit: (n: number) => { maybeSingle: () => Promise<{ data: unknown }> };
-            };
-          };
-        };
-      };
-    };
-  },
-): Promise<RegistrationSemester | null> {
-  const nowIso = new Date().toISOString();
+type SemesterRow = {
+  id: string;
+  name: string;
+  term: string;
+  year: number;
+  registration_opens_at: string | null;
+  registration_closes_at: string | null;
+};
 
-  // 1. Any semester whose window is open right now.
-  const { data: openRow } = await (supabase as unknown as {
-    from: (t: string) => {
-      select: (s: string) => {
-        lte: (k: string, v: unknown) => {
-          gte: (k: string, v: unknown) => {
-            order: (k: string, o?: { ascending?: boolean }) => {
-              limit: (n: number) => { maybeSingle: () => Promise<{ data: unknown }> };
-            };
-          };
-        };
-      };
-    };
-  })
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function pickRegistrationSemester(supabase: any): Promise<RegistrationSemester | null> {
+  const nowIso = new Date().toISOString();
+  const cols = "id, name, term, year, registration_opens_at, registration_closes_at";
+
+  // 1. Window open right now.
+  const { data: openRow } = await supabase
     .from("semesters")
-    .select("id, name, term, year, registration_opens_at, registration_closes_at")
+    .select(cols)
     .lte("registration_opens_at", nowIso)
     .gte("registration_closes_at", nowIso)
     .order("registration_opens_at", { ascending: false })
     .limit(1)
     .maybeSingle();
-
-  const row = openRow as {
-    id: string;
-    name: string;
-    term: string;
-    year: number;
-    registration_opens_at: string | null;
-    registration_closes_at: string | null;
-  } | null;
-
-  if (row) return { ...row, window_open: true };
+  if (openRow) return { ...(openRow as SemesterRow), window_open: true };
 
   // 2. Next semester opening in the future.
-  const { data: nextRow } = await (supabase as unknown as {
-    from: (t: string) => {
-      select: (s: string) => {
-        gt: (k: string, v: unknown) => {
-          order: (k: string, o?: { ascending?: boolean }) => {
-            limit: (n: number) => { maybeSingle: () => Promise<{ data: unknown }> };
-          };
-        };
-      };
-    };
-  })
+  const { data: nextRow } = await supabase
     .from("semesters")
-    .select("id, name, term, year, registration_opens_at, registration_closes_at")
+    .select(cols)
     .gt("registration_opens_at", nowIso)
     .order("registration_opens_at", { ascending: true })
     .limit(1)
     .maybeSingle();
+  if (nextRow) return { ...(nextRow as SemesterRow), window_open: false };
 
-  const nrow = nextRow as {
-    id: string;
-    name: string;
-    term: string;
-    year: number;
-    registration_opens_at: string | null;
-    registration_closes_at: string | null;
-  } | null;
-  if (nrow) return { ...nrow, window_open: false };
-
-  // 3. Fallback: current semester so the UI has context.
-  const { data: curRow } = await (supabase as unknown as {
-    from: (t: string) => {
-      select: (s: string) => {
-        eq: (k: string, v: unknown) => { maybeSingle: () => Promise<{ data: unknown }> };
-      };
-    };
-  })
+  // 3. Fallback: current semester so the UI has context to render.
+  const { data: curRow } = await supabase
     .from("semesters")
-    .select("id, name, term, year, registration_opens_at, registration_closes_at")
+    .select(cols)
     .eq("is_current", true)
     .maybeSingle();
-
-  const c = curRow as {
-    id: string;
-    name: string;
-    term: string;
-    year: number;
-    registration_opens_at: string | null;
-    registration_closes_at: string | null;
-  } | null;
+  const c = curRow as SemesterRow | null;
   if (!c) return null;
   const nowMs = Date.now();
   const window_open =
