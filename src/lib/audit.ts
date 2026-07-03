@@ -12,7 +12,9 @@ export async function writeAudit(
 ): Promise<void> {
   try {
     await supabase.from("audit_log").insert({
-      user_id: userId, action, entity_type: entityType, entity_id: entityId, changes,
+      user_id: userId, action, entity_type: entityType, entity_id: entityId,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      changes: changes as any,
     });
   } catch { /* swallow */ }
 }

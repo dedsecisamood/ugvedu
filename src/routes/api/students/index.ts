@@ -19,8 +19,8 @@ const createSchema = z.object({
   student_id: z.string().min(3).max(30),
   full_name: z.string().min(1).max(200),
   department_id: z.string().uuid(),
-  program_id: z.string().uuid().optional(),
-  admission_semester_id: z.string().uuid().optional(),
+  program_id: z.string().uuid(),
+  admission_semester_id: z.string().uuid(),
   current_semester_id: z.string().uuid().optional(),
   status: z.enum(["ACTIVE","PROBATION","GRADUATED","SUSPENDED","DISMISSED"]).optional(),
 });
