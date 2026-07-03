@@ -94,7 +94,7 @@ export const recalculateSemesterResult = createServerFn({ method: "POST" })
           student_user_id: data.studentUserId,
           semester_id: data.semesterId,
           status: result.status,          // "GENERATED" | "BLOCKED"
-          sgpa: result.sgpa,               // string | null — Postgres NUMERIC accepts strings
+          sgpa: result.sgpa === null ? null : Number(result.sgpa),
           blocked_reason: result.blockedReason,
           calculated_at: new Date().toISOString(),
         },
