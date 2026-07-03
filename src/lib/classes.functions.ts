@@ -85,7 +85,7 @@ export const getMyClasses = createServerFn({ method: "GET" })
         .from("profiles")
         .select("id, full_name")
         .in("id", instructorIds);
-      for (const p of profs ?? []) nameOf.set(p.id, p.full_name);
+      for (const p of profs ?? []) nameOf.set(p.id, p.full_name ?? "");
     }
 
     const classes: ClassRow[] = typed
