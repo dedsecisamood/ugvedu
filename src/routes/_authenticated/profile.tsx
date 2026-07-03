@@ -62,8 +62,8 @@ function ProfileForm({ initial }: { initial: ProfilePayload }) {
   const [saving, setSaving] = useState(false);
   const [photoSrc, setPhotoSrc] = useState<string | null>(initial.photoSignedUrl);
 
-  const form = useForm<ProfileUpdateInput>({
-    resolver: zodResolver(profileUpdateSchema),
+  const form = useForm<ProfileUpdateInput, unknown, ProfileUpdateInput>({
+    resolver: zodResolver(profileUpdateSchema) as unknown as import("react-hook-form").Resolver<ProfileUpdateInput, unknown, ProfileUpdateInput>,
     defaultValues: {
       phone: initial.editable.phone ?? "",
       address: initial.editable.address ?? "",
