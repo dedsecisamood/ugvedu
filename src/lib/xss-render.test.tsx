@@ -26,13 +26,16 @@ describe("XSS: user-authored text renders as inert content", () => {
       const html = renderToStaticMarkup(
         <div className="whitespace-pre-wrap">{payload}</div>,
       );
-      // No raw executable tags leaked through
-      expect(html).not.toMatch(/<script/i);
-      expect(html).not.toMatch(/onerror=/i);
-      expect(html).not.toMatch(/onload=/i);
-      // Angle-brackets are entity-escaped
-      if (payload.includes("<")) expect(html).toContain("&lt;");
+      // The payload's own `<` and `>` must be entity-escaped — that's what
+      // makes onerror=/onload=/etc. text instead of HTML. So we check the
+      // escape happened, rather than banning the raw substrings (which
+      // legitimately appear inside &lt;svg/onload=alert(1)&gt;).
+      if (payload.includes("<")) {
+        expect(html).toContain("&lt;");
+        expect(html).not.toContain(payload); // raw payload must never appear verbatim
+      }
       if (payload.includes(">")) expect(html).toContain("&gt;");
-    });
-  }
-});
+      // And no matter what, an executable <script or event-handler-in-a-tag
+      // pattern (< immediately followed by a letter) must not leak.
+      expect(html).not.toMatch(/<script/i);
+      expect(html).not.toMatch(/<[a-z][^>]*on(error|load|click)=/i);
