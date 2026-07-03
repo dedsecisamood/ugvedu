@@ -187,7 +187,7 @@ export const getIntakeOptions = createServerFn({ method: "GET" })
     const [{ data: depts }, { data: progs }, { data: sems }, { data: allStudents }, { data: users }] =
       await Promise.all([
         supabaseAdmin.from("departments").select("id, code, name").order("code"),
-        supabaseAdmin.from("programs").select("id, code, name, department_id").order("code"),
+        supabaseAdmin.from("programs").select("id, name, department_id").order("name"),
         supabaseAdmin.from("semesters").select("id, name, term, year")
           .order("year", { ascending: false }).order("term"),
         supabaseAdmin.from("students").select("user_id"),
