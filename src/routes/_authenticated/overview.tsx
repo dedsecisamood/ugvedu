@@ -75,13 +75,11 @@ function Overview() {
       <PageHeader
         crumb="Dashboard"
         title={`Welcome, ${student.fullName.split(" ")[0]}`}
-        subtitle={
-          <>
-            <span className="font-medium text-foreground">ID {student.studentId}</span>
-            {student.programName && <> · {student.programName}</>}
-            {student.currentSemesterName && <> · {student.currentSemesterName} semester</>}
-          </>  as unknown as string
-        }
+        subtitle={[
+          `ID ${student.studentId}`,
+          student.programName,
+          student.currentSemesterName ? `${student.currentSemesterName} semester` : null,
+        ].filter(Boolean).join(" · ")}
       />
 
       {/* Blocked semester banner */}
