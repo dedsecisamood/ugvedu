@@ -174,7 +174,7 @@ export const setUserActive = createServerFn({ method: "POST" })
 
 export type IntakeOptions = {
   departments: { id: string; code: string; name: string }[];
-  programs: { id: string; code: string; name: string; departmentId: string }[];
+  programs: { id: string; name: string; departmentId: string }[];
   semesters: { id: string; name: string; term: string; year: number }[];
   unassignedUsers: { userId: string; email: string | null; fullName: string | null }[];
 };
