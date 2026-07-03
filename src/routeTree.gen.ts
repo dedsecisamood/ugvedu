@@ -14,7 +14,17 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
+import { Route as AuthenticatedRoutineRouteImport } from './routes/_authenticated/routine'
+import { Route as AuthenticatedResultsRouteImport } from './routes/_authenticated/results'
+import { Route as AuthenticatedRegistrationsRouteImport } from './routes/_authenticated/registrations'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedPaymentsRouteImport } from './routes/_authenticated/payments'
 import { Route as AuthenticatedOverviewRouteImport } from './routes/_authenticated/overview'
+import { Route as AuthenticatedNoticesRouteImport } from './routes/_authenticated/notices'
+import { Route as AuthenticatedMyCoursesRouteImport } from './routes/_authenticated/my-courses'
+import { Route as AuthenticatedLabProjectsRouteImport } from './routes/_authenticated/lab-projects'
+import { Route as AuthenticatedCourseMaterialsRouteImport } from './routes/_authenticated/course-materials'
+import { Route as AuthenticatedClassesRouteImport } from './routes/_authenticated/classes'
 import { Route as ApiStudentsIndexRouteImport } from './routes/api/students/index'
 import { Route as ApiRoutineIndexRouteImport } from './routes/api/routine/index'
 import { Route as ApiRegistrationsIndexRouteImport } from './routes/api/registrations/index'
@@ -56,9 +66,62 @@ const ApiHealthRoute = ApiHealthRouteImport.update({
   path: '/api/health',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRoutineRoute = AuthenticatedRoutineRouteImport.update({
+  id: '/routine',
+  path: '/routine',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedResultsRoute = AuthenticatedResultsRouteImport.update({
+  id: '/results',
+  path: '/results',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedRegistrationsRoute =
+  AuthenticatedRegistrationsRouteImport.update({
+    id: '/registrations',
+    path: '/registrations',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPaymentsRoute = AuthenticatedPaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedOverviewRoute = AuthenticatedOverviewRouteImport.update({
   id: '/overview',
   path: '/overview',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedNoticesRoute = AuthenticatedNoticesRouteImport.update({
+  id: '/notices',
+  path: '/notices',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMyCoursesRoute = AuthenticatedMyCoursesRouteImport.update({
+  id: '/my-courses',
+  path: '/my-courses',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLabProjectsRoute =
+  AuthenticatedLabProjectsRouteImport.update({
+    id: '/lab-projects',
+    path: '/lab-projects',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCourseMaterialsRoute =
+  AuthenticatedCourseMaterialsRouteImport.update({
+    id: '/course-materials',
+    path: '/course-materials',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedClassesRoute = AuthenticatedClassesRouteImport.update({
+  id: '/classes',
+  path: '/classes',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const ApiStudentsIndexRoute = ApiStudentsIndexRouteImport.update({
@@ -148,7 +211,17 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/classes': typeof AuthenticatedClassesRoute
+  '/course-materials': typeof AuthenticatedCourseMaterialsRoute
+  '/lab-projects': typeof AuthenticatedLabProjectsRoute
+  '/my-courses': typeof AuthenticatedMyCoursesRoute
+  '/notices': typeof AuthenticatedNoticesRoute
   '/overview': typeof AuthenticatedOverviewRoute
+  '/payments': typeof AuthenticatedPaymentsRoute
+  '/profile': typeof AuthenticatedProfileRoute
+  '/registrations': typeof AuthenticatedRegistrationsRoute
+  '/results': typeof AuthenticatedResultsRoute
+  '/routine': typeof AuthenticatedRoutineRoute
   '/api/health': typeof ApiHealthRoute
   '/api/notices/$id': typeof ApiNoticesIdRoute
   '/api/registrations/$id': typeof ApiRegistrationsIdRoute
@@ -171,7 +244,17 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/classes': typeof AuthenticatedClassesRoute
+  '/course-materials': typeof AuthenticatedCourseMaterialsRoute
+  '/lab-projects': typeof AuthenticatedLabProjectsRoute
+  '/my-courses': typeof AuthenticatedMyCoursesRoute
+  '/notices': typeof AuthenticatedNoticesRoute
   '/overview': typeof AuthenticatedOverviewRoute
+  '/payments': typeof AuthenticatedPaymentsRoute
+  '/profile': typeof AuthenticatedProfileRoute
+  '/registrations': typeof AuthenticatedRegistrationsRoute
+  '/results': typeof AuthenticatedResultsRoute
+  '/routine': typeof AuthenticatedRoutineRoute
   '/api/health': typeof ApiHealthRoute
   '/api/notices/$id': typeof ApiNoticesIdRoute
   '/api/registrations/$id': typeof ApiRegistrationsIdRoute
@@ -196,7 +279,17 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/classes': typeof AuthenticatedClassesRoute
+  '/_authenticated/course-materials': typeof AuthenticatedCourseMaterialsRoute
+  '/_authenticated/lab-projects': typeof AuthenticatedLabProjectsRoute
+  '/_authenticated/my-courses': typeof AuthenticatedMyCoursesRoute
+  '/_authenticated/notices': typeof AuthenticatedNoticesRoute
   '/_authenticated/overview': typeof AuthenticatedOverviewRoute
+  '/_authenticated/payments': typeof AuthenticatedPaymentsRoute
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/_authenticated/registrations': typeof AuthenticatedRegistrationsRoute
+  '/_authenticated/results': typeof AuthenticatedResultsRoute
+  '/_authenticated/routine': typeof AuthenticatedRoutineRoute
   '/api/health': typeof ApiHealthRoute
   '/api/notices/$id': typeof ApiNoticesIdRoute
   '/api/registrations/$id': typeof ApiRegistrationsIdRoute
@@ -221,7 +314,17 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/reset-password'
+    | '/classes'
+    | '/course-materials'
+    | '/lab-projects'
+    | '/my-courses'
+    | '/notices'
     | '/overview'
+    | '/payments'
+    | '/profile'
+    | '/registrations'
+    | '/results'
+    | '/routine'
     | '/api/health'
     | '/api/notices/$id'
     | '/api/registrations/$id'
@@ -244,7 +347,17 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/reset-password'
+    | '/classes'
+    | '/course-materials'
+    | '/lab-projects'
+    | '/my-courses'
+    | '/notices'
     | '/overview'
+    | '/payments'
+    | '/profile'
+    | '/registrations'
+    | '/results'
+    | '/routine'
     | '/api/health'
     | '/api/notices/$id'
     | '/api/registrations/$id'
@@ -268,7 +381,17 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/reset-password'
+    | '/_authenticated/classes'
+    | '/_authenticated/course-materials'
+    | '/_authenticated/lab-projects'
+    | '/_authenticated/my-courses'
+    | '/_authenticated/notices'
     | '/_authenticated/overview'
+    | '/_authenticated/payments'
+    | '/_authenticated/profile'
+    | '/_authenticated/registrations'
+    | '/_authenticated/results'
+    | '/_authenticated/routine'
     | '/api/health'
     | '/api/notices/$id'
     | '/api/registrations/$id'
@@ -348,11 +471,81 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiHealthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/routine': {
+      id: '/_authenticated/routine'
+      path: '/routine'
+      fullPath: '/routine'
+      preLoaderRoute: typeof AuthenticatedRoutineRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/results': {
+      id: '/_authenticated/results'
+      path: '/results'
+      fullPath: '/results'
+      preLoaderRoute: typeof AuthenticatedResultsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/registrations': {
+      id: '/_authenticated/registrations'
+      path: '/registrations'
+      fullPath: '/registrations'
+      preLoaderRoute: typeof AuthenticatedRegistrationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/payments': {
+      id: '/_authenticated/payments'
+      path: '/payments'
+      fullPath: '/payments'
+      preLoaderRoute: typeof AuthenticatedPaymentsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/overview': {
       id: '/_authenticated/overview'
       path: '/overview'
       fullPath: '/overview'
       preLoaderRoute: typeof AuthenticatedOverviewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/notices': {
+      id: '/_authenticated/notices'
+      path: '/notices'
+      fullPath: '/notices'
+      preLoaderRoute: typeof AuthenticatedNoticesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/my-courses': {
+      id: '/_authenticated/my-courses'
+      path: '/my-courses'
+      fullPath: '/my-courses'
+      preLoaderRoute: typeof AuthenticatedMyCoursesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/lab-projects': {
+      id: '/_authenticated/lab-projects'
+      path: '/lab-projects'
+      fullPath: '/lab-projects'
+      preLoaderRoute: typeof AuthenticatedLabProjectsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/course-materials': {
+      id: '/_authenticated/course-materials'
+      path: '/course-materials'
+      fullPath: '/course-materials'
+      preLoaderRoute: typeof AuthenticatedCourseMaterialsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/classes': {
+      id: '/_authenticated/classes'
+      path: '/classes'
+      fullPath: '/classes'
+      preLoaderRoute: typeof AuthenticatedClassesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/api/students/': {
@@ -471,11 +664,31 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedClassesRoute: typeof AuthenticatedClassesRoute
+  AuthenticatedCourseMaterialsRoute: typeof AuthenticatedCourseMaterialsRoute
+  AuthenticatedLabProjectsRoute: typeof AuthenticatedLabProjectsRoute
+  AuthenticatedMyCoursesRoute: typeof AuthenticatedMyCoursesRoute
+  AuthenticatedNoticesRoute: typeof AuthenticatedNoticesRoute
   AuthenticatedOverviewRoute: typeof AuthenticatedOverviewRoute
+  AuthenticatedPaymentsRoute: typeof AuthenticatedPaymentsRoute
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedRegistrationsRoute: typeof AuthenticatedRegistrationsRoute
+  AuthenticatedResultsRoute: typeof AuthenticatedResultsRoute
+  AuthenticatedRoutineRoute: typeof AuthenticatedRoutineRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedClassesRoute: AuthenticatedClassesRoute,
+  AuthenticatedCourseMaterialsRoute: AuthenticatedCourseMaterialsRoute,
+  AuthenticatedLabProjectsRoute: AuthenticatedLabProjectsRoute,
+  AuthenticatedMyCoursesRoute: AuthenticatedMyCoursesRoute,
+  AuthenticatedNoticesRoute: AuthenticatedNoticesRoute,
   AuthenticatedOverviewRoute: AuthenticatedOverviewRoute,
+  AuthenticatedPaymentsRoute: AuthenticatedPaymentsRoute,
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedRegistrationsRoute: AuthenticatedRegistrationsRoute,
+  AuthenticatedResultsRoute: AuthenticatedResultsRoute,
+  AuthenticatedRoutineRoute: AuthenticatedRoutineRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
