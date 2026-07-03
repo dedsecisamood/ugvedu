@@ -1,24 +1,33 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { APP_NAME } from "@/lib/constants";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="flex min-h-screen items-center justify-center bg-background px-6 py-16">
+      <div className="max-w-xl text-center">
+        <p className="text-xs font-semibold uppercase tracking-widest text-gold">
+          Scaffold ready
+        </p>
+        <h1 className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+          {APP_NAME}
+        </h1>
+        <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+          Infrastructure is wired up: design tokens, role system, auth backend,
+          and API scaffolding are in place. Pages will be built next.
+        </p>
+        <div className="mt-6 flex justify-center">
+          <Link
+            to="/api/health"
+            className="inline-flex items-center justify-center rounded-md bg-navy px-4 py-2 text-sm font-medium text-navy-foreground transition-opacity hover:opacity-90"
+          >
+            Check /api/health
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
