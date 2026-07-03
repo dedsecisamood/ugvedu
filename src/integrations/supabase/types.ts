@@ -1102,6 +1102,10 @@ export type Database = {
         Args: { _department_code: string; _user_id: string }
         Returns: boolean
       }
+      is_head_of_student: {
+        Args: { _head_user: string; _student_user: string }
+        Returns: boolean
+      }
       owns_enrollment: {
         Args: { _enrollment_id: string; _user_id: string }
         Returns: boolean
@@ -1115,6 +1119,15 @@ export type Database = {
       }
       register_for_offering: {
         Args: { _course_offering_id: string; _student_user_id: string }
+        Returns: Json
+      }
+      resolve_incomplete_grade: {
+        Args: {
+          _enrollment_id: string
+          _new_letter: string
+          _note?: string
+          _resolver: string
+        }
         Returns: Json
       }
     }
