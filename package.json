@@ -10,7 +10,10 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "db:reset": "node scripts/db-reset.mjs"
+    "db:reset": "node scripts/db-reset.mjs",
+    "test": "vitest run --coverage",
+    "test:watch": "vitest",
+    "test:e2e": "node tests/e2e/run.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
