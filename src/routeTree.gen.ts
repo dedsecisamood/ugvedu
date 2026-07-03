@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiHealthRouteImport } from './routes/api/health'
+import { Route as ApiStudentsIndexRouteImport } from './routes/api/students/index'
+import { Route as ApiResultsIndexRouteImport } from './routes/api/results/index'
+import { Route as ApiPaymentsIndexRouteImport } from './routes/api/payments/index'
+import { Route as ApiNoticesIndexRouteImport } from './routes/api/notices/index'
+import { Route as ApiCoursesIndexRouteImport } from './routes/api/courses/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiHealthRoute = ApiHealthRouteImport.update({
+  id: '/api/health',
+  path: '/api/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiStudentsIndexRoute = ApiStudentsIndexRouteImport.update({
+  id: '/api/students/',
+  path: '/api/students/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiResultsIndexRoute = ApiResultsIndexRouteImport.update({
+  id: '/api/results/',
+  path: '/api/results/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPaymentsIndexRoute = ApiPaymentsIndexRouteImport.update({
+  id: '/api/payments/',
+  path: '/api/payments/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiNoticesIndexRoute = ApiNoticesIndexRouteImport.update({
+  id: '/api/notices/',
+  path: '/api/notices/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCoursesIndexRoute = ApiCoursesIndexRouteImport.update({
+  id: '/api/courses/',
+  path: '/api/courses/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/health': typeof ApiHealthRoute
+  '/api/courses/': typeof ApiCoursesIndexRoute
+  '/api/notices/': typeof ApiNoticesIndexRoute
+  '/api/payments/': typeof ApiPaymentsIndexRoute
+  '/api/results/': typeof ApiResultsIndexRoute
+  '/api/students/': typeof ApiStudentsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/health': typeof ApiHealthRoute
+  '/api/courses': typeof ApiCoursesIndexRoute
+  '/api/notices': typeof ApiNoticesIndexRoute
+  '/api/payments': typeof ApiPaymentsIndexRoute
+  '/api/results': typeof ApiResultsIndexRoute
+  '/api/students': typeof ApiStudentsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/health': typeof ApiHealthRoute
+  '/api/courses/': typeof ApiCoursesIndexRoute
+  '/api/notices/': typeof ApiNoticesIndexRoute
+  '/api/payments/': typeof ApiPaymentsIndexRoute
+  '/api/results/': typeof ApiResultsIndexRoute
+  '/api/students/': typeof ApiStudentsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/api/health'
+    | '/api/courses/'
+    | '/api/notices/'
+    | '/api/payments/'
+    | '/api/results/'
+    | '/api/students/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/api/health'
+    | '/api/courses'
+    | '/api/notices'
+    | '/api/payments'
+    | '/api/results'
+    | '/api/students'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/health'
+    | '/api/courses/'
+    | '/api/notices/'
+    | '/api/payments/'
+    | '/api/results/'
+    | '/api/students/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiHealthRoute: typeof ApiHealthRoute
+  ApiCoursesIndexRoute: typeof ApiCoursesIndexRoute
+  ApiNoticesIndexRoute: typeof ApiNoticesIndexRoute
+  ApiPaymentsIndexRoute: typeof ApiPaymentsIndexRoute
+  ApiResultsIndexRoute: typeof ApiResultsIndexRoute
+  ApiStudentsIndexRoute: typeof ApiStudentsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +130,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/health': {
+      id: '/api/health'
+      path: '/api/health'
+      fullPath: '/api/health'
+      preLoaderRoute: typeof ApiHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/students/': {
+      id: '/api/students/'
+      path: '/api/students'
+      fullPath: '/api/students/'
+      preLoaderRoute: typeof ApiStudentsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/results/': {
+      id: '/api/results/'
+      path: '/api/results'
+      fullPath: '/api/results/'
+      preLoaderRoute: typeof ApiResultsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/payments/': {
+      id: '/api/payments/'
+      path: '/api/payments'
+      fullPath: '/api/payments/'
+      preLoaderRoute: typeof ApiPaymentsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/notices/': {
+      id: '/api/notices/'
+      path: '/api/notices'
+      fullPath: '/api/notices/'
+      preLoaderRoute: typeof ApiNoticesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/courses/': {
+      id: '/api/courses/'
+      path: '/api/courses'
+      fullPath: '/api/courses/'
+      preLoaderRoute: typeof ApiCoursesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiHealthRoute: ApiHealthRoute,
+  ApiCoursesIndexRoute: ApiCoursesIndexRoute,
+  ApiNoticesIndexRoute: ApiNoticesIndexRoute,
+  ApiPaymentsIndexRoute: ApiPaymentsIndexRoute,
+  ApiResultsIndexRoute: ApiResultsIndexRoute,
+  ApiStudentsIndexRoute: ApiStudentsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

@@ -77,14 +77,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "UGV Barishal — Student Portal" },
+      {
+        name: "description",
+        content:
+          "Official student portal for the University of Global Village, Barishal. Results, courses, notices, and payments in one place.",
+      },
+      { property: "og:title", content: "UGV Barishal — Student Portal" },
+      {
+        property: "og:description",
+        content:
+          "Official student portal for the University of Global Village, Barishal.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
