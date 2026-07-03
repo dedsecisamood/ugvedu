@@ -68,6 +68,110 @@ export type Database = {
         }
         Relationships: []
       }
+      class_schedules: {
+        Row: {
+          course_offering_id: string
+          created_at: string
+          day_of_week: Database["public"]["Enums"]["day_of_week"]
+          end_time: string
+          id: string
+          room: string
+          start_time: string
+          updated_at: string
+        }
+        Insert: {
+          course_offering_id: string
+          created_at?: string
+          day_of_week: Database["public"]["Enums"]["day_of_week"]
+          end_time: string
+          id?: string
+          room: string
+          start_time: string
+          updated_at?: string
+        }
+        Update: {
+          course_offering_id?: string
+          created_at?: string
+          day_of_week?: Database["public"]["Enums"]["day_of_week"]
+          end_time?: string
+          id?: string
+          room?: string
+          start_time?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "class_schedules_course_offering_id_fkey"
+            columns: ["course_offering_id"]
+            isOneToOne: false
+            referencedRelation: "course_offerings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      course_materials: {
+        Row: {
+          course_id: string
+          course_offering_id: string | null
+          created_at: string
+          deleted_at: string | null
+          description: string | null
+          file_size_bytes: number
+          id: string
+          mime_type: string
+          storage_bucket: string
+          storage_path: string
+          title: string
+          updated_at: string
+          uploaded_by_user_id: string | null
+        }
+        Insert: {
+          course_id: string
+          course_offering_id?: string | null
+          created_at?: string
+          deleted_at?: string | null
+          description?: string | null
+          file_size_bytes: number
+          id?: string
+          mime_type: string
+          storage_bucket?: string
+          storage_path: string
+          title: string
+          updated_at?: string
+          uploaded_by_user_id?: string | null
+        }
+        Update: {
+          course_id?: string
+          course_offering_id?: string | null
+          created_at?: string
+          deleted_at?: string | null
+          description?: string | null
+          file_size_bytes?: number
+          id?: string
+          mime_type?: string
+          storage_bucket?: string
+          storage_path?: string
+          title?: string
+          updated_at?: string
+          uploaded_by_user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_materials_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "course_materials_course_offering_id_fkey"
+            columns: ["course_offering_id"]
+            isOneToOne: false
+            referencedRelation: "course_offerings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       course_offerings: {
         Row: {
           capacity: number
@@ -320,6 +424,104 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "grade_scale"
             referencedColumns: ["letter"]
+          },
+        ]
+      }
+      lab_projects: {
+        Row: {
+          course_offering_id: string
+          created_at: string
+          description: string | null
+          due_at: string
+          id: string
+          max_score: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          course_offering_id: string
+          created_at?: string
+          description?: string | null
+          due_at: string
+          id?: string
+          max_score: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          course_offering_id?: string
+          created_at?: string
+          description?: string | null
+          due_at?: string
+          id?: string
+          max_score?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lab_projects_course_offering_id_fkey"
+            columns: ["course_offering_id"]
+            isOneToOne: false
+            referencedRelation: "course_offerings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lab_submissions: {
+        Row: {
+          created_at: string
+          file_size_bytes: number
+          id: string
+          lab_project_id: string
+          mime_type: string
+          score: number | null
+          storage_bucket: string
+          storage_path: string
+          student_user_id: string
+          submitted_at: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          file_size_bytes: number
+          id?: string
+          lab_project_id: string
+          mime_type: string
+          score?: number | null
+          storage_bucket?: string
+          storage_path: string
+          student_user_id: string
+          submitted_at?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          file_size_bytes?: number
+          id?: string
+          lab_project_id?: string
+          mime_type?: string
+          score?: number | null
+          storage_bucket?: string
+          storage_path?: string
+          student_user_id?: string
+          submitted_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lab_submissions_lab_project_id_fkey"
+            columns: ["lab_project_id"]
+            isOneToOne: false
+            referencedRelation: "lab_projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lab_submissions_student_user_id_fkey"
+            columns: ["student_user_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["user_id"]
           },
         ]
       }
@@ -843,6 +1045,7 @@ export type Database = {
     Enums: {
       app_role: "student" | "department_head" | "admin" | "registrar"
       course_type: "THEORY" | "SESSIONAL"
+      day_of_week: "SUN" | "MON" | "TUE" | "WED" | "THU" | "FRI" | "SAT"
       enrollment_status: "ENROLLED" | "DROPPED" | "COMPLETED" | "RETAKE"
       payment_status: "PAID" | "PARTIAL" | "OVERDUE"
       registration_status: "PENDING" | "APPROVED" | "REJECTED"
@@ -983,6 +1186,7 @@ export const Constants = {
     Enums: {
       app_role: ["student", "department_head", "admin", "registrar"],
       course_type: ["THEORY", "SESSIONAL"],
+      day_of_week: ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
       enrollment_status: ["ENROLLED", "DROPPED", "COMPLETED", "RETAKE"],
       payment_status: ["PAID", "PARTIAL", "OVERDUE"],
       registration_status: ["PENDING", "APPROVED", "REJECTED"],

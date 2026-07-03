@@ -16,10 +16,14 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as ApiStudentsIndexRouteImport } from './routes/api/students/index'
+import { Route as ApiRoutineIndexRouteImport } from './routes/api/routine/index'
 import { Route as ApiResultsIndexRouteImport } from './routes/api/results/index'
 import { Route as ApiPaymentsIndexRouteImport } from './routes/api/payments/index'
 import { Route as ApiNoticesIndexRouteImport } from './routes/api/notices/index'
+import { Route as ApiLabProjectsIndexRouteImport } from './routes/api/lab-projects/index'
 import { Route as ApiCoursesIndexRouteImport } from './routes/api/courses/index'
+import { Route as ApiCourseMaterialsIndexRouteImport } from './routes/api/course-materials/index'
+import { Route as ApiStudentsIdCoursesRouteImport } from './routes/api/students/$id.courses'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -55,6 +59,11 @@ const ApiStudentsIndexRoute = ApiStudentsIndexRouteImport.update({
   path: '/api/students/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiRoutineIndexRoute = ApiRoutineIndexRouteImport.update({
+  id: '/api/routine/',
+  path: '/api/routine/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiResultsIndexRoute = ApiResultsIndexRouteImport.update({
   id: '/api/results/',
   path: '/api/results/',
@@ -70,9 +79,24 @@ const ApiNoticesIndexRoute = ApiNoticesIndexRouteImport.update({
   path: '/api/notices/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiLabProjectsIndexRoute = ApiLabProjectsIndexRouteImport.update({
+  id: '/api/lab-projects/',
+  path: '/api/lab-projects/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiCoursesIndexRoute = ApiCoursesIndexRouteImport.update({
   id: '/api/courses/',
   path: '/api/courses/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCourseMaterialsIndexRoute = ApiCourseMaterialsIndexRouteImport.update({
+  id: '/api/course-materials/',
+  path: '/api/course-materials/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiStudentsIdCoursesRoute = ApiStudentsIdCoursesRouteImport.update({
+  id: '/api/students/$id/courses',
+  path: '/api/students/$id/courses',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -82,11 +106,15 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/api/health': typeof ApiHealthRoute
+  '/api/course-materials/': typeof ApiCourseMaterialsIndexRoute
   '/api/courses/': typeof ApiCoursesIndexRoute
+  '/api/lab-projects/': typeof ApiLabProjectsIndexRoute
   '/api/notices/': typeof ApiNoticesIndexRoute
   '/api/payments/': typeof ApiPaymentsIndexRoute
   '/api/results/': typeof ApiResultsIndexRoute
+  '/api/routine/': typeof ApiRoutineIndexRoute
   '/api/students/': typeof ApiStudentsIndexRoute
+  '/api/students/$id/courses': typeof ApiStudentsIdCoursesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -94,11 +122,15 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/api/health': typeof ApiHealthRoute
+  '/api/course-materials': typeof ApiCourseMaterialsIndexRoute
   '/api/courses': typeof ApiCoursesIndexRoute
+  '/api/lab-projects': typeof ApiLabProjectsIndexRoute
   '/api/notices': typeof ApiNoticesIndexRoute
   '/api/payments': typeof ApiPaymentsIndexRoute
   '/api/results': typeof ApiResultsIndexRoute
+  '/api/routine': typeof ApiRoutineIndexRoute
   '/api/students': typeof ApiStudentsIndexRoute
+  '/api/students/$id/courses': typeof ApiStudentsIdCoursesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -108,11 +140,15 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/api/health': typeof ApiHealthRoute
+  '/api/course-materials/': typeof ApiCourseMaterialsIndexRoute
   '/api/courses/': typeof ApiCoursesIndexRoute
+  '/api/lab-projects/': typeof ApiLabProjectsIndexRoute
   '/api/notices/': typeof ApiNoticesIndexRoute
   '/api/payments/': typeof ApiPaymentsIndexRoute
   '/api/results/': typeof ApiResultsIndexRoute
+  '/api/routine/': typeof ApiRoutineIndexRoute
   '/api/students/': typeof ApiStudentsIndexRoute
+  '/api/students/$id/courses': typeof ApiStudentsIdCoursesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -122,11 +158,15 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/dashboard'
     | '/api/health'
+    | '/api/course-materials/'
     | '/api/courses/'
+    | '/api/lab-projects/'
     | '/api/notices/'
     | '/api/payments/'
     | '/api/results/'
+    | '/api/routine/'
     | '/api/students/'
+    | '/api/students/$id/courses'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -134,11 +174,15 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/dashboard'
     | '/api/health'
+    | '/api/course-materials'
     | '/api/courses'
+    | '/api/lab-projects'
     | '/api/notices'
     | '/api/payments'
     | '/api/results'
+    | '/api/routine'
     | '/api/students'
+    | '/api/students/$id/courses'
   id:
     | '__root__'
     | '/'
@@ -147,11 +191,15 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/_authenticated/dashboard'
     | '/api/health'
+    | '/api/course-materials/'
     | '/api/courses/'
+    | '/api/lab-projects/'
     | '/api/notices/'
     | '/api/payments/'
     | '/api/results/'
+    | '/api/routine/'
     | '/api/students/'
+    | '/api/students/$id/courses'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -160,11 +208,15 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ApiHealthRoute: typeof ApiHealthRoute
+  ApiCourseMaterialsIndexRoute: typeof ApiCourseMaterialsIndexRoute
   ApiCoursesIndexRoute: typeof ApiCoursesIndexRoute
+  ApiLabProjectsIndexRoute: typeof ApiLabProjectsIndexRoute
   ApiNoticesIndexRoute: typeof ApiNoticesIndexRoute
   ApiPaymentsIndexRoute: typeof ApiPaymentsIndexRoute
   ApiResultsIndexRoute: typeof ApiResultsIndexRoute
+  ApiRoutineIndexRoute: typeof ApiRoutineIndexRoute
   ApiStudentsIndexRoute: typeof ApiStudentsIndexRoute
+  ApiStudentsIdCoursesRoute: typeof ApiStudentsIdCoursesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -218,6 +270,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiStudentsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/routine/': {
+      id: '/api/routine/'
+      path: '/api/routine'
+      fullPath: '/api/routine/'
+      preLoaderRoute: typeof ApiRoutineIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/results/': {
       id: '/api/results/'
       path: '/api/results'
@@ -239,11 +298,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiNoticesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/lab-projects/': {
+      id: '/api/lab-projects/'
+      path: '/api/lab-projects'
+      fullPath: '/api/lab-projects/'
+      preLoaderRoute: typeof ApiLabProjectsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/courses/': {
       id: '/api/courses/'
       path: '/api/courses'
       fullPath: '/api/courses/'
       preLoaderRoute: typeof ApiCoursesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/course-materials/': {
+      id: '/api/course-materials/'
+      path: '/api/course-materials'
+      fullPath: '/api/course-materials/'
+      preLoaderRoute: typeof ApiCourseMaterialsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/students/$id/courses': {
+      id: '/api/students/$id/courses'
+      path: '/api/students/$id/courses'
+      fullPath: '/api/students/$id/courses'
+      preLoaderRoute: typeof ApiStudentsIdCoursesRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -266,11 +346,15 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ApiHealthRoute: ApiHealthRoute,
+  ApiCourseMaterialsIndexRoute: ApiCourseMaterialsIndexRoute,
   ApiCoursesIndexRoute: ApiCoursesIndexRoute,
+  ApiLabProjectsIndexRoute: ApiLabProjectsIndexRoute,
   ApiNoticesIndexRoute: ApiNoticesIndexRoute,
   ApiPaymentsIndexRoute: ApiPaymentsIndexRoute,
   ApiResultsIndexRoute: ApiResultsIndexRoute,
+  ApiRoutineIndexRoute: ApiRoutineIndexRoute,
   ApiStudentsIndexRoute: ApiStudentsIndexRoute,
+  ApiStudentsIdCoursesRoute: ApiStudentsIdCoursesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
