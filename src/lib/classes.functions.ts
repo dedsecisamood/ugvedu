@@ -73,7 +73,11 @@ export const getMyClasses = createServerFn({ method: "GET" })
 
     // Pull instructor names in one shot
     const instructorIds = Array.from(
-      new Set(typed.map((r) => r.course_offerings.instructor_user_id).filter((x): x is string => !!x)),
+      new Set(
+        typed
+          .map((r) => r.course_offerings.instructor_user_id)
+          .filter((x): x is string => typeof x === "string" && x.length > 0),
+      ),
     );
     const nameOf = new Map<string, string>();
     if (instructorIds.length > 0) {
