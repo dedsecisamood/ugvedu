@@ -13,6 +13,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PayCheckoutRouteImport } from './routes/pay.checkout'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as AuthenticatedRoutineRouteImport } from './routes/_authenticated/routine'
 import { Route as AuthenticatedResultsRouteImport } from './routes/_authenticated/results'
@@ -59,6 +60,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PayCheckoutRoute = PayCheckoutRouteImport.update({
+  id: '/pay/checkout',
+  path: '/pay/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiHealthRoute = ApiHealthRouteImport.update({
@@ -223,6 +229,7 @@ export interface FileRoutesByFullPath {
   '/results': typeof AuthenticatedResultsRoute
   '/routine': typeof AuthenticatedRoutineRoute
   '/api/health': typeof ApiHealthRoute
+  '/pay/checkout': typeof PayCheckoutRoute
   '/api/notices/$id': typeof ApiNoticesIdRoute
   '/api/registrations/$id': typeof ApiRegistrationsIdRoute
   '/api/students/$id': typeof ApiStudentsIdRouteWithChildren
@@ -256,6 +263,7 @@ export interface FileRoutesByTo {
   '/results': typeof AuthenticatedResultsRoute
   '/routine': typeof AuthenticatedRoutineRoute
   '/api/health': typeof ApiHealthRoute
+  '/pay/checkout': typeof PayCheckoutRoute
   '/api/notices/$id': typeof ApiNoticesIdRoute
   '/api/registrations/$id': typeof ApiRegistrationsIdRoute
   '/api/students/$id': typeof ApiStudentsIdRouteWithChildren
@@ -291,6 +299,7 @@ export interface FileRoutesById {
   '/_authenticated/results': typeof AuthenticatedResultsRoute
   '/_authenticated/routine': typeof AuthenticatedRoutineRoute
   '/api/health': typeof ApiHealthRoute
+  '/pay/checkout': typeof PayCheckoutRoute
   '/api/notices/$id': typeof ApiNoticesIdRoute
   '/api/registrations/$id': typeof ApiRegistrationsIdRoute
   '/api/students/$id': typeof ApiStudentsIdRouteWithChildren
@@ -326,6 +335,7 @@ export interface FileRouteTypes {
     | '/results'
     | '/routine'
     | '/api/health'
+    | '/pay/checkout'
     | '/api/notices/$id'
     | '/api/registrations/$id'
     | '/api/students/$id'
@@ -359,6 +369,7 @@ export interface FileRouteTypes {
     | '/results'
     | '/routine'
     | '/api/health'
+    | '/pay/checkout'
     | '/api/notices/$id'
     | '/api/registrations/$id'
     | '/api/students/$id'
@@ -393,6 +404,7 @@ export interface FileRouteTypes {
     | '/_authenticated/results'
     | '/_authenticated/routine'
     | '/api/health'
+    | '/pay/checkout'
     | '/api/notices/$id'
     | '/api/registrations/$id'
     | '/api/students/$id'
@@ -417,6 +429,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ApiHealthRoute: typeof ApiHealthRoute
+  PayCheckoutRoute: typeof PayCheckoutRoute
   ApiNoticesIdRoute: typeof ApiNoticesIdRoute
   ApiRegistrationsIdRoute: typeof ApiRegistrationsIdRoute
   ApiStudentsIdRoute: typeof ApiStudentsIdRouteWithChildren
@@ -462,6 +475,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pay/checkout': {
+      id: '/pay/checkout'
+      path: '/pay/checkout'
+      fullPath: '/pay/checkout'
+      preLoaderRoute: typeof PayCheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/health': {
@@ -712,6 +732,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ApiHealthRoute: ApiHealthRoute,
+  PayCheckoutRoute: PayCheckoutRoute,
   ApiNoticesIdRoute: ApiNoticesIdRoute,
   ApiRegistrationsIdRoute: ApiRegistrationsIdRoute,
   ApiStudentsIdRoute: ApiStudentsIdRouteWithChildren,
