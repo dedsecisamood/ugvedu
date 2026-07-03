@@ -199,7 +199,7 @@ export const getIntakeOptions = createServerFn({ method: "GET" })
     return {
       departments: depts ?? [],
       programs: (progs ?? []).map((p) => ({
-        id: p.id, code: p.code, name: p.name, departmentId: p.department_id,
+        id: p.id, name: p.name, departmentId: p.department_id,
       })),
       semesters: sems ?? [],
       unassignedUsers: (users.users ?? [])
