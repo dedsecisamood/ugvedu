@@ -44,6 +44,30 @@ export type Database = {
         }
         Relationships: []
       }
+      auth_rate_limits: {
+        Row: {
+          attempt_count: number
+          email: string
+          first_attempt_at: string
+          locked_until: string | null
+          updated_at: string
+        }
+        Insert: {
+          attempt_count?: number
+          email: string
+          first_attempt_at?: string
+          locked_until?: string | null
+          updated_at?: string
+        }
+        Update: {
+          attempt_count?: number
+          email?: string
+          first_attempt_at?: string
+          locked_until?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       course_offerings: {
         Row: {
           capacity: number
@@ -299,6 +323,36 @@ export type Database = {
           },
         ]
       }
+      mfa_totp_secrets: {
+        Row: {
+          backup_codes: string[]
+          created_at: string
+          enabled: boolean
+          secret: string
+          updated_at: string
+          user_id: string
+          verified_at: string | null
+        }
+        Insert: {
+          backup_codes?: string[]
+          created_at?: string
+          enabled?: boolean
+          secret: string
+          updated_at?: string
+          user_id: string
+          verified_at?: string | null
+        }
+        Update: {
+          backup_codes?: string[]
+          created_at?: string
+          enabled?: boolean
+          secret?: string
+          updated_at?: string
+          user_id?: string
+          verified_at?: string | null
+        }
+        Relationships: []
+      }
       notices: {
         Row: {
           body: string
@@ -379,6 +433,33 @@ export type Database = {
           id?: string
           is_read?: boolean
           title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      password_reset_tokens: {
+        Row: {
+          created_at: string
+          expires_at: string
+          id: string
+          token_hash: string
+          used_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at: string
+          id?: string
+          token_hash: string
+          used_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string
+          id?: string
+          token_hash?: string
+          used_at?: string | null
           user_id?: string
         }
         Relationships: []
@@ -748,6 +829,10 @@ export type Database = {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
+        Returns: boolean
+      }
+      is_department_head_of: {
+        Args: { _department_code: string; _user_id: string }
         Returns: boolean
       }
       owns_enrollment: {
