@@ -261,7 +261,7 @@ export const getOverview = createServerFn({ method: "GET" })
       .from("payments")
       .select("id, amount_due, amount_paid, due_date, status")
       .eq("student_user_id", userId)
-      .in("status", ["PENDING", "PARTIAL", "OVERDUE"])
+      .in("status", ["PARTIAL", "OVERDUE"])
       .order("due_date", { ascending: true });
     const today = new Date().toISOString().slice(0, 10);
     let outstanding = 0;
