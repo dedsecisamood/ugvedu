@@ -33,6 +33,7 @@ import {
   listRegistrationOfferings,
   requestRegistration,
   type OfferingRow,
+  type MyRegistration,
 } from "@/lib/registrations.functions";
 
 const offeringsQuery = queryOptions({
