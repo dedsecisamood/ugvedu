@@ -775,31 +775,43 @@ export type Database = {
       }
       profiles: {
         Row: {
+          address: string | null
           created_at: string
           department: string | null
+          emergency_contact_name: string | null
+          emergency_contact_phone: string | null
           full_name: string | null
           id: string
           is_active: boolean
+          phone: string | null
           photo_url: string | null
           student_id: string | null
           updated_at: string
         }
         Insert: {
+          address?: string | null
           created_at?: string
           department?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
           full_name?: string | null
           id: string
           is_active?: boolean
+          phone?: string | null
           photo_url?: string | null
           student_id?: string | null
           updated_at?: string
         }
         Update: {
+          address?: string | null
           created_at?: string
           department?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
           full_name?: string | null
           id?: string
           is_active?: boolean
+          phone?: string | null
           photo_url?: string | null
           student_id?: string | null
           updated_at?: string
