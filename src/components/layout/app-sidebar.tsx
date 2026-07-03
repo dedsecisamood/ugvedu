@@ -77,6 +77,22 @@ const baseGroups: NavGroup[] = [
 export function AppSidebar() {
   const path = useRouterState({ select: (r) => r.location.pathname });
   const isActive = (url: string) => path === url || path.startsWith(url + "/");
+  const fetchRoles = useServerFn(getMyRoles);
+  const { data: rolesData } = useQuery({
+    queryKey: ["my-roles"],
+    queryFn: () => fetchRoles(),
+    staleTime: 60_000,
+  });
+  const roles = new Set(rolesData?.roles ?? []);
+  const groups = baseGroups.filter((g) => !g.roles || g.roles.some((r) => roles.has(r)));
+
+  // Type helpers to satisfy TanStack Link's typed `to` prop.
+  type Href = "/overview" | "/profile" | "/classes" | "/routine" | "/notices"
+    | "/results" | "/my-courses" | "/course-materials" | "/registrations"
+    | "/lab-projects" | "/payments"
+    | "/faculty/blocked"
+    | "/admin" | "/admin/users" | "/admin/students/new" | "/admin/grades"
+    | "/admin/grade-scale" | "/admin/semesters" | "/admin/audit";
 
   return (
     <Sidebar collapsible="icon" aria-label="Main navigation">
