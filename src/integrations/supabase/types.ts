@@ -555,6 +555,32 @@ export type Database = {
         }
         Relationships: []
       }
+      notice_reads: {
+        Row: {
+          notice_id: string
+          read_at: string
+          user_id: string
+        }
+        Insert: {
+          notice_id: string
+          read_at?: string
+          user_id: string
+        }
+        Update: {
+          notice_id?: string
+          read_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notice_reads_notice_id_fkey"
+            columns: ["notice_id"]
+            isOneToOne: false
+            referencedRelation: "notices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       notices: {
         Row: {
           body: string
@@ -663,6 +689,33 @@ export type Database = {
           token_hash?: string
           used_at?: string | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      payment_webhook_events: {
+        Row: {
+          id: string
+          payload: Json
+          provider: string
+          received_at: string
+          status: string
+          transaction_ref: string
+        }
+        Insert: {
+          id?: string
+          payload: Json
+          provider?: string
+          received_at?: string
+          status: string
+          transaction_ref: string
+        }
+        Update: {
+          id?: string
+          payload?: Json
+          provider?: string
+          received_at?: string
+          status?: string
+          transaction_ref?: string
         }
         Relationships: []
       }
@@ -1040,6 +1093,17 @@ export type Database = {
       owns_enrollment: {
         Args: { _enrollment_id: string; _user_id: string }
         Returns: boolean
+      }
+      publish_offering_grades: {
+        Args: { _course_offering_id: string; _published_by: string }
+        Returns: {
+          semester_id: string
+          student_user_id: string
+        }[]
+      }
+      register_for_offering: {
+        Args: { _course_offering_id: string; _student_user_id: string }
+        Returns: Json
       }
     }
     Enums: {
