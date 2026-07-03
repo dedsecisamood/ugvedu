@@ -72,7 +72,7 @@ export const getRoster = createServerFn({ method: "GET" })
       .from("grade_scale")
       .select("letter, grade_point, is_fail")
       .order("sort_order");
-    const entries: RosterEntry[] = ((rows ?? []) as Array<{
+    const entries: RosterEntry[] = ((rows ?? []) as unknown as Array<{
       id: string; student_user_id: string;
       students: { student_id: string; full_name: string };
       grades: Array<{ letter_grade: string | null; is_incomplete: boolean | null; published_at: string | null }>;
