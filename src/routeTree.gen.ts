@@ -14,7 +14,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
-import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedOverviewRouteImport } from './routes/_authenticated/overview'
 import { Route as ApiStudentsIndexRouteImport } from './routes/api/students/index'
 import { Route as ApiRoutineIndexRouteImport } from './routes/api/routine/index'
 import { Route as ApiRegistrationsIndexRouteImport } from './routes/api/registrations/index'
@@ -56,9 +56,9 @@ const ApiHealthRoute = ApiHealthRouteImport.update({
   path: '/api/health',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const AuthenticatedOverviewRoute = AuthenticatedOverviewRouteImport.update({
+  id: '/overview',
+  path: '/overview',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const ApiStudentsIndexRoute = ApiStudentsIndexRouteImport.update({
@@ -148,7 +148,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/overview': typeof AuthenticatedOverviewRoute
   '/api/health': typeof ApiHealthRoute
   '/api/notices/$id': typeof ApiNoticesIdRoute
   '/api/registrations/$id': typeof ApiRegistrationsIdRoute
@@ -171,7 +171,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/overview': typeof AuthenticatedOverviewRoute
   '/api/health': typeof ApiHealthRoute
   '/api/notices/$id': typeof ApiNoticesIdRoute
   '/api/registrations/$id': typeof ApiRegistrationsIdRoute
@@ -196,7 +196,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/overview': typeof AuthenticatedOverviewRoute
   '/api/health': typeof ApiHealthRoute
   '/api/notices/$id': typeof ApiNoticesIdRoute
   '/api/registrations/$id': typeof ApiRegistrationsIdRoute
@@ -221,7 +221,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/reset-password'
-    | '/dashboard'
+    | '/overview'
     | '/api/health'
     | '/api/notices/$id'
     | '/api/registrations/$id'
@@ -244,7 +244,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/reset-password'
-    | '/dashboard'
+    | '/overview'
     | '/api/health'
     | '/api/notices/$id'
     | '/api/registrations/$id'
@@ -268,7 +268,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/reset-password'
-    | '/_authenticated/dashboard'
+    | '/_authenticated/overview'
     | '/api/health'
     | '/api/notices/$id'
     | '/api/registrations/$id'
@@ -348,11 +348,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiHealthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+    '/_authenticated/overview': {
+      id: '/_authenticated/overview'
+      path: '/overview'
+      fullPath: '/overview'
+      preLoaderRoute: typeof AuthenticatedOverviewRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/api/students/': {
@@ -471,11 +471,11 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedOverviewRoute: typeof AuthenticatedOverviewRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedOverviewRoute: AuthenticatedOverviewRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
