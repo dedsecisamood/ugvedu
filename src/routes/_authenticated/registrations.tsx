@@ -349,9 +349,6 @@ function MyRequests({
     for (const r of requests) g[r.status].push(r);
     return g;
   }, [requests]);
-    for (const r of requests) g[r.status].push(r);
-    return g;
-  }, [requests]);
 
   if (requests.length === 0) {
     return (
