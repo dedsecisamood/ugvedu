@@ -153,7 +153,7 @@ export const resolveIncomplete = createServerFn({ method: "POST" })
       _enrollment_id: data.enrollmentId,
       _new_letter: data.newLetter.toUpperCase(),
       _resolver: userId,
-      _note: data.note ?? null,
+      _note: data.note ?? undefined,
     });
     if (rpcErr) throw new Error(rpcErr.message);
     const res = rpcRes as { ok: boolean; error?: string; student_user_id?: string; semester_id?: string };
