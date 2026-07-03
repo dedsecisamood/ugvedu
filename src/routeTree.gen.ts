@@ -17,13 +17,20 @@ import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as ApiStudentsIndexRouteImport } from './routes/api/students/index'
 import { Route as ApiRoutineIndexRouteImport } from './routes/api/routine/index'
-import { Route as ApiResultsIndexRouteImport } from './routes/api/results/index'
+import { Route as ApiRegistrationsIndexRouteImport } from './routes/api/registrations/index'
 import { Route as ApiPaymentsIndexRouteImport } from './routes/api/payments/index'
+import { Route as ApiNotificationsIndexRouteImport } from './routes/api/notifications/index'
 import { Route as ApiNoticesIndexRouteImport } from './routes/api/notices/index'
 import { Route as ApiLabProjectsIndexRouteImport } from './routes/api/lab-projects/index'
+import { Route as ApiGradesIndexRouteImport } from './routes/api/grades/index'
 import { Route as ApiCoursesIndexRouteImport } from './routes/api/courses/index'
 import { Route as ApiCourseMaterialsIndexRouteImport } from './routes/api/course-materials/index'
+import { Route as ApiStudentsIdRouteImport } from './routes/api/students/$id'
+import { Route as ApiRegistrationsIdRouteImport } from './routes/api/registrations/$id'
+import { Route as ApiNoticesIdRouteImport } from './routes/api/notices/$id'
 import { Route as ApiStudentsIdCoursesRouteImport } from './routes/api/students/$id.courses'
+import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
+import { Route as ApiGradesPublishOfferingIdRouteImport } from './routes/api/grades/publish.$offeringId'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -64,14 +71,19 @@ const ApiRoutineIndexRoute = ApiRoutineIndexRouteImport.update({
   path: '/api/routine/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiResultsIndexRoute = ApiResultsIndexRouteImport.update({
-  id: '/api/results/',
-  path: '/api/results/',
+const ApiRegistrationsIndexRoute = ApiRegistrationsIndexRouteImport.update({
+  id: '/api/registrations/',
+  path: '/api/registrations/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPaymentsIndexRoute = ApiPaymentsIndexRouteImport.update({
   id: '/api/payments/',
   path: '/api/payments/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiNotificationsIndexRoute = ApiNotificationsIndexRouteImport.update({
+  id: '/api/notifications/',
+  path: '/api/notifications/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiNoticesIndexRoute = ApiNoticesIndexRouteImport.update({
@@ -84,6 +96,11 @@ const ApiLabProjectsIndexRoute = ApiLabProjectsIndexRouteImport.update({
   path: '/api/lab-projects/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiGradesIndexRoute = ApiGradesIndexRouteImport.update({
+  id: '/api/grades/',
+  path: '/api/grades/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiCoursesIndexRoute = ApiCoursesIndexRouteImport.update({
   id: '/api/courses/',
   path: '/api/courses/',
@@ -94,11 +111,38 @@ const ApiCourseMaterialsIndexRoute = ApiCourseMaterialsIndexRouteImport.update({
   path: '/api/course-materials/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiStudentsIdCoursesRoute = ApiStudentsIdCoursesRouteImport.update({
-  id: '/api/students/$id/courses',
-  path: '/api/students/$id/courses',
+const ApiStudentsIdRoute = ApiStudentsIdRouteImport.update({
+  id: '/api/students/$id',
+  path: '/api/students/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiRegistrationsIdRoute = ApiRegistrationsIdRouteImport.update({
+  id: '/api/registrations/$id',
+  path: '/api/registrations/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiNoticesIdRoute = ApiNoticesIdRouteImport.update({
+  id: '/api/notices/$id',
+  path: '/api/notices/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiStudentsIdCoursesRoute = ApiStudentsIdCoursesRouteImport.update({
+  id: '/courses',
+  path: '/courses',
+  getParentRoute: () => ApiStudentsIdRoute,
+} as any)
+const ApiPublicPaymentsWebhookRoute =
+  ApiPublicPaymentsWebhookRouteImport.update({
+    id: '/api/public/payments/webhook',
+    path: '/api/public/payments/webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiGradesPublishOfferingIdRoute =
+  ApiGradesPublishOfferingIdRouteImport.update({
+    id: '/api/grades/publish/$offeringId',
+    path: '/api/grades/publish/$offeringId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -106,14 +150,21 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/api/health': typeof ApiHealthRoute
+  '/api/notices/$id': typeof ApiNoticesIdRoute
+  '/api/registrations/$id': typeof ApiRegistrationsIdRoute
+  '/api/students/$id': typeof ApiStudentsIdRouteWithChildren
   '/api/course-materials/': typeof ApiCourseMaterialsIndexRoute
   '/api/courses/': typeof ApiCoursesIndexRoute
+  '/api/grades/': typeof ApiGradesIndexRoute
   '/api/lab-projects/': typeof ApiLabProjectsIndexRoute
   '/api/notices/': typeof ApiNoticesIndexRoute
+  '/api/notifications/': typeof ApiNotificationsIndexRoute
   '/api/payments/': typeof ApiPaymentsIndexRoute
-  '/api/results/': typeof ApiResultsIndexRoute
+  '/api/registrations/': typeof ApiRegistrationsIndexRoute
   '/api/routine/': typeof ApiRoutineIndexRoute
   '/api/students/': typeof ApiStudentsIndexRoute
+  '/api/grades/publish/$offeringId': typeof ApiGradesPublishOfferingIdRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/api/students/$id/courses': typeof ApiStudentsIdCoursesRoute
 }
 export interface FileRoutesByTo {
@@ -122,14 +173,21 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/api/health': typeof ApiHealthRoute
+  '/api/notices/$id': typeof ApiNoticesIdRoute
+  '/api/registrations/$id': typeof ApiRegistrationsIdRoute
+  '/api/students/$id': typeof ApiStudentsIdRouteWithChildren
   '/api/course-materials': typeof ApiCourseMaterialsIndexRoute
   '/api/courses': typeof ApiCoursesIndexRoute
+  '/api/grades': typeof ApiGradesIndexRoute
   '/api/lab-projects': typeof ApiLabProjectsIndexRoute
   '/api/notices': typeof ApiNoticesIndexRoute
+  '/api/notifications': typeof ApiNotificationsIndexRoute
   '/api/payments': typeof ApiPaymentsIndexRoute
-  '/api/results': typeof ApiResultsIndexRoute
+  '/api/registrations': typeof ApiRegistrationsIndexRoute
   '/api/routine': typeof ApiRoutineIndexRoute
   '/api/students': typeof ApiStudentsIndexRoute
+  '/api/grades/publish/$offeringId': typeof ApiGradesPublishOfferingIdRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/api/students/$id/courses': typeof ApiStudentsIdCoursesRoute
 }
 export interface FileRoutesById {
@@ -140,14 +198,21 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/api/health': typeof ApiHealthRoute
+  '/api/notices/$id': typeof ApiNoticesIdRoute
+  '/api/registrations/$id': typeof ApiRegistrationsIdRoute
+  '/api/students/$id': typeof ApiStudentsIdRouteWithChildren
   '/api/course-materials/': typeof ApiCourseMaterialsIndexRoute
   '/api/courses/': typeof ApiCoursesIndexRoute
+  '/api/grades/': typeof ApiGradesIndexRoute
   '/api/lab-projects/': typeof ApiLabProjectsIndexRoute
   '/api/notices/': typeof ApiNoticesIndexRoute
+  '/api/notifications/': typeof ApiNotificationsIndexRoute
   '/api/payments/': typeof ApiPaymentsIndexRoute
-  '/api/results/': typeof ApiResultsIndexRoute
+  '/api/registrations/': typeof ApiRegistrationsIndexRoute
   '/api/routine/': typeof ApiRoutineIndexRoute
   '/api/students/': typeof ApiStudentsIndexRoute
+  '/api/grades/publish/$offeringId': typeof ApiGradesPublishOfferingIdRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/api/students/$id/courses': typeof ApiStudentsIdCoursesRoute
 }
 export interface FileRouteTypes {
@@ -158,14 +223,21 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/dashboard'
     | '/api/health'
+    | '/api/notices/$id'
+    | '/api/registrations/$id'
+    | '/api/students/$id'
     | '/api/course-materials/'
     | '/api/courses/'
+    | '/api/grades/'
     | '/api/lab-projects/'
     | '/api/notices/'
+    | '/api/notifications/'
     | '/api/payments/'
-    | '/api/results/'
+    | '/api/registrations/'
     | '/api/routine/'
     | '/api/students/'
+    | '/api/grades/publish/$offeringId'
+    | '/api/public/payments/webhook'
     | '/api/students/$id/courses'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -174,14 +246,21 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/dashboard'
     | '/api/health'
+    | '/api/notices/$id'
+    | '/api/registrations/$id'
+    | '/api/students/$id'
     | '/api/course-materials'
     | '/api/courses'
+    | '/api/grades'
     | '/api/lab-projects'
     | '/api/notices'
+    | '/api/notifications'
     | '/api/payments'
-    | '/api/results'
+    | '/api/registrations'
     | '/api/routine'
     | '/api/students'
+    | '/api/grades/publish/$offeringId'
+    | '/api/public/payments/webhook'
     | '/api/students/$id/courses'
   id:
     | '__root__'
@@ -191,14 +270,21 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/_authenticated/dashboard'
     | '/api/health'
+    | '/api/notices/$id'
+    | '/api/registrations/$id'
+    | '/api/students/$id'
     | '/api/course-materials/'
     | '/api/courses/'
+    | '/api/grades/'
     | '/api/lab-projects/'
     | '/api/notices/'
+    | '/api/notifications/'
     | '/api/payments/'
-    | '/api/results/'
+    | '/api/registrations/'
     | '/api/routine/'
     | '/api/students/'
+    | '/api/grades/publish/$offeringId'
+    | '/api/public/payments/webhook'
     | '/api/students/$id/courses'
   fileRoutesById: FileRoutesById
 }
@@ -208,15 +294,21 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ApiHealthRoute: typeof ApiHealthRoute
+  ApiNoticesIdRoute: typeof ApiNoticesIdRoute
+  ApiRegistrationsIdRoute: typeof ApiRegistrationsIdRoute
+  ApiStudentsIdRoute: typeof ApiStudentsIdRouteWithChildren
   ApiCourseMaterialsIndexRoute: typeof ApiCourseMaterialsIndexRoute
   ApiCoursesIndexRoute: typeof ApiCoursesIndexRoute
+  ApiGradesIndexRoute: typeof ApiGradesIndexRoute
   ApiLabProjectsIndexRoute: typeof ApiLabProjectsIndexRoute
   ApiNoticesIndexRoute: typeof ApiNoticesIndexRoute
+  ApiNotificationsIndexRoute: typeof ApiNotificationsIndexRoute
   ApiPaymentsIndexRoute: typeof ApiPaymentsIndexRoute
-  ApiResultsIndexRoute: typeof ApiResultsIndexRoute
+  ApiRegistrationsIndexRoute: typeof ApiRegistrationsIndexRoute
   ApiRoutineIndexRoute: typeof ApiRoutineIndexRoute
   ApiStudentsIndexRoute: typeof ApiStudentsIndexRoute
-  ApiStudentsIdCoursesRoute: typeof ApiStudentsIdCoursesRoute
+  ApiGradesPublishOfferingIdRoute: typeof ApiGradesPublishOfferingIdRoute
+  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -277,11 +369,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiRoutineIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/results/': {
-      id: '/api/results/'
-      path: '/api/results'
-      fullPath: '/api/results/'
-      preLoaderRoute: typeof ApiResultsIndexRouteImport
+    '/api/registrations/': {
+      id: '/api/registrations/'
+      path: '/api/registrations'
+      fullPath: '/api/registrations/'
+      preLoaderRoute: typeof ApiRegistrationsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/payments/': {
@@ -289,6 +381,13 @@ declare module '@tanstack/react-router' {
       path: '/api/payments'
       fullPath: '/api/payments/'
       preLoaderRoute: typeof ApiPaymentsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/notifications/': {
+      id: '/api/notifications/'
+      path: '/api/notifications'
+      fullPath: '/api/notifications/'
+      preLoaderRoute: typeof ApiNotificationsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/notices/': {
@@ -305,6 +404,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiLabProjectsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/grades/': {
+      id: '/api/grades/'
+      path: '/api/grades'
+      fullPath: '/api/grades/'
+      preLoaderRoute: typeof ApiGradesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/courses/': {
       id: '/api/courses/'
       path: '/api/courses'
@@ -319,11 +425,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiCourseMaterialsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/students/$id': {
+      id: '/api/students/$id'
+      path: '/api/students/$id'
+      fullPath: '/api/students/$id'
+      preLoaderRoute: typeof ApiStudentsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/registrations/$id': {
+      id: '/api/registrations/$id'
+      path: '/api/registrations/$id'
+      fullPath: '/api/registrations/$id'
+      preLoaderRoute: typeof ApiRegistrationsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/notices/$id': {
+      id: '/api/notices/$id'
+      path: '/api/notices/$id'
+      fullPath: '/api/notices/$id'
+      preLoaderRoute: typeof ApiNoticesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/students/$id/courses': {
       id: '/api/students/$id/courses'
-      path: '/api/students/$id/courses'
+      path: '/courses'
       fullPath: '/api/students/$id/courses'
       preLoaderRoute: typeof ApiStudentsIdCoursesRouteImport
+      parentRoute: typeof ApiStudentsIdRoute
+    }
+    '/api/public/payments/webhook': {
+      id: '/api/public/payments/webhook'
+      path: '/api/public/payments/webhook'
+      fullPath: '/api/public/payments/webhook'
+      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/grades/publish/$offeringId': {
+      id: '/api/grades/publish/$offeringId'
+      path: '/api/grades/publish/$offeringId'
+      fullPath: '/api/grades/publish/$offeringId'
+      preLoaderRoute: typeof ApiGradesPublishOfferingIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -340,32 +481,40 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface ApiStudentsIdRouteChildren {
+  ApiStudentsIdCoursesRoute: typeof ApiStudentsIdCoursesRoute
+}
+
+const ApiStudentsIdRouteChildren: ApiStudentsIdRouteChildren = {
+  ApiStudentsIdCoursesRoute: ApiStudentsIdCoursesRoute,
+}
+
+const ApiStudentsIdRouteWithChildren = ApiStudentsIdRoute._addFileChildren(
+  ApiStudentsIdRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ApiHealthRoute: ApiHealthRoute,
+  ApiNoticesIdRoute: ApiNoticesIdRoute,
+  ApiRegistrationsIdRoute: ApiRegistrationsIdRoute,
+  ApiStudentsIdRoute: ApiStudentsIdRouteWithChildren,
   ApiCourseMaterialsIndexRoute: ApiCourseMaterialsIndexRoute,
   ApiCoursesIndexRoute: ApiCoursesIndexRoute,
+  ApiGradesIndexRoute: ApiGradesIndexRoute,
   ApiLabProjectsIndexRoute: ApiLabProjectsIndexRoute,
   ApiNoticesIndexRoute: ApiNoticesIndexRoute,
+  ApiNotificationsIndexRoute: ApiNotificationsIndexRoute,
   ApiPaymentsIndexRoute: ApiPaymentsIndexRoute,
-  ApiResultsIndexRoute: ApiResultsIndexRoute,
+  ApiRegistrationsIndexRoute: ApiRegistrationsIndexRoute,
   ApiRoutineIndexRoute: ApiRoutineIndexRoute,
   ApiStudentsIndexRoute: ApiStudentsIndexRoute,
-  ApiStudentsIdCoursesRoute: ApiStudentsIdCoursesRoute,
+  ApiGradesPublishOfferingIdRoute: ApiGradesPublishOfferingIdRoute,
+  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
