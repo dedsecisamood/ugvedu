@@ -340,12 +340,15 @@ function OfferingCard({
 function MyRequests({
   requests,
 }: {
-  requests: ReturnType<typeof useSuspenseQuery<typeof myRegsQuery>>["data"]["registrations"];
+  requests: MyRegistration[];
 }) {
   const grouped = useMemo(() => {
-    const g: Record<"PENDING" | "APPROVED" | "REJECTED", typeof requests> = {
+    const g: Record<"PENDING" | "APPROVED" | "REJECTED", MyRegistration[]> = {
       PENDING: [], APPROVED: [], REJECTED: [],
     };
+    for (const r of requests) g[r.status].push(r);
+    return g;
+  }, [requests]);
     for (const r of requests) g[r.status].push(r);
     return g;
   }, [requests]);
