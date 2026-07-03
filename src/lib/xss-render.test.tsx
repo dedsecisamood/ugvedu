@@ -39,3 +39,6 @@ describe("XSS: user-authored text renders as inert content", () => {
       // pattern (< immediately followed by a letter) must not leak.
       expect(html).not.toMatch(/<script/i);
       expect(html).not.toMatch(/<[a-z][^>]*on(error|load|click)=/i);
+    });
+  }
+});
