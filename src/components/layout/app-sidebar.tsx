@@ -124,7 +124,7 @@ export function AppSidebar() {
                       tooltip={item.title}
                       className="data-[active=true]:bg-gold data-[active=true]:text-gold-foreground data-[active=true]:hover:bg-gold/90"
                     >
-                      <Link to={item.url}>
+                      <Link to={item.url as Href}>
                         <item.icon className="size-4" aria-hidden />
                         <span>{item.title}</span>
                       </Link>
