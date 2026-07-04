@@ -280,7 +280,13 @@ function SignInCard() {
     }
     setBusy(true);
     try {
-      const res = await signIn({ data: { email, password } });
+      // Accept either a full email OR a numeric student ID.
+      // Bare student IDs (e.g. 12521076) are mapped to their institutional email.
+      const raw = email.trim();
+      const loginEmail = raw.includes("@")
+        ? raw
+        : `${raw}@student.ugv.edu.bd`;
+      const res = await signIn({ data: { email: loginEmail, password } });
       if (!res.ok) {
         setErr(res.error);
         return;
