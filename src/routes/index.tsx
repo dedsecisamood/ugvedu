@@ -410,23 +410,6 @@ function SignInCard() {
           {busy ? "Signing in…" : "Sign in to Portal"}
         </button>
 
-        <details className="rounded-lg border border-slate-200 bg-slate-50/60 px-3 py-2 text-xs text-slate-600">
-          <summary className="cursor-pointer font-semibold text-navy">
-            Demo credentials
-          </summary>
-          <div className="mt-2 space-y-1">
-            <div>
-              <span className="font-medium">Student ID:</span> 12521076
-            </div>
-            <div>
-              <span className="font-medium">Password:</span> DemoPass123!
-            </div>
-            <p className="pt-1 text-[11px] text-slate-500">
-              You can also sign in with a full email such as
-              head.cse@ugv.edu.bd or admin@ugv.edu.bd.
-            </p>
-          </div>
-        </details>
 
         <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs">
           <a href="/auth" className="font-semibold text-navy hover:underline">
