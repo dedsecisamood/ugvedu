@@ -31,8 +31,28 @@ function sha256(value: string): string {
 // -----------------------------------------------------------------------------
 // signInWithPassword — rate-limited
 // -----------------------------------------------------------------------------
+const STUDENT_EMAIL_DOMAIN = "student.ugv.edu.bd";
+
+function normalizePortalIdentifier(value: string): string {
+  const raw = value.trim().toLowerCase();
+  if (raw.includes("@")) return raw;
+  return `${raw}@${STUDENT_EMAIL_DOMAIN}`;
+}
+
 const signInSchema = z.object({
-  email: z.string().email().max(255).transform((v) => v.trim().toLowerCase()),
+  email: z
+    .string()
+    .trim()
+    .min(3)
+    .max(255)
+    .refine(
+      (v) =>
+        v.includes("@")
+          ? z.string().email().safeParse(v).success
+          : /^[0-9A-Za-z._-]{3,30}$/.test(v),
+      "Enter a valid student ID or email address.",
+    )
+    .transform(normalizePortalIdentifier),
   password: z.string().min(1).max(200),
 });
 

@@ -55,7 +55,7 @@ function SignInForm({ onForgot }: { onForgot: () => void }) {
     setErr(null);
     setBusy(true);
     try {
-      const res = await signIn({ data: { email, password } });
+      const res = await signIn({ data: { email: email.trim(), password } });
       if (!res.ok) {
         setErr(res.error);
         return;
@@ -65,7 +65,7 @@ function SignInForm({ onForgot }: { onForgot: () => void }) {
         setErr("Could not establish session.");
         return;
       }
-      navigate({ to: "/" });
+      navigate({ to: "/overview" });
     } finally {
       setBusy(false);
     }
@@ -76,13 +76,14 @@ function SignInForm({ onForgot }: { onForgot: () => void }) {
       <h2 className="text-lg font-semibold text-foreground">Sign in</h2>
 
       <label className="block">
-        <span className="text-sm font-medium text-foreground">Email</span>
+        <span className="text-sm font-medium text-foreground">Student ID / Email</span>
         <input
-          type="email"
+          type="text"
           required
-          autoComplete="email"
+          autoComplete="username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          placeholder="12521076 or name@ugv.edu.bd"
           className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
         />
       </label>

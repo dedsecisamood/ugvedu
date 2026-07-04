@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ChevronDown,
   Clock3,
@@ -265,28 +265,24 @@ function SignInCard() {
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  const puzzle = useMemo(() => {
+  const [puzzle, setPuzzle] = useState<{ a: number; b: number; answer: number } | null>(null);
+
+  useEffect(() => {
     const a = 3 + Math.floor(Math.random() * 8);
     const b = 2 + Math.floor(Math.random() * 8);
-    return { a, b, answer: a + b };
+    setPuzzle({ a, b, answer: a + b });
   }, []);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setErr(null);
-    if (Number(captcha) !== puzzle.answer) {
+    if (!puzzle || Number(captcha) !== puzzle.answer) {
       setErr("Security check failed. Please try the sum again.");
       return;
     }
     setBusy(true);
     try {
-      // Accept either a full email OR a numeric student ID.
-      // Bare student IDs (e.g. 12521076) are mapped to their institutional email.
-      const raw = email.trim();
-      const loginEmail = raw.includes("@")
-        ? raw
-        : `${raw}@student.ugv.edu.bd`;
-      const res = await signIn({ data: { email: loginEmail, password } });
+      const res = await signIn({ data: { email: email.trim(), password } });
       if (!res.ok) {
         setErr(res.error);
         return;
@@ -381,7 +377,7 @@ function SignInCard() {
               aria-hidden="true"
               className="grid min-w-[92px] place-items-center rounded-xl bg-navy px-4 text-base font-bold text-white shadow-inner"
             >
-              {puzzle.a} + {puzzle.b} = ?
+              {puzzle ? `${puzzle.a} + ${puzzle.b} = ?` : "…"}
             </div>
             <input
               id="captcha"
@@ -391,6 +387,7 @@ function SignInCard() {
               placeholder="Your answer"
               value={captcha}
               onChange={(e) => setCaptcha(e.target.value)}
+              disabled={!puzzle || busy}
               className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-navy focus:outline-none focus:ring-2 focus:ring-navy/15"
             />
           </div>
@@ -407,7 +404,7 @@ function SignInCard() {
 
         <button
           type="submit"
-          disabled={busy}
+          disabled={busy || !puzzle}
           className="w-full rounded-xl bg-gradient-to-r from-rose-500 to-rose-600 px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] text-white shadow-md shadow-rose-600/30 transition-all hover:shadow-lg hover:shadow-rose-600/40 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {busy ? "Signing in…" : "Sign in to Portal"}
