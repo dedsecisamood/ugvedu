@@ -21,6 +21,7 @@ import {
   SidebarMenuItem, SidebarRail,
 } from "@/components/ui/sidebar";
 import { getMyRoles } from "@/lib/roles.functions";
+import ugvLogo from "@/assets/ugv-logo.png.asset.json";
 
 type NavItem = { title: string; url: string; icon: React.ComponentType<{ className?: string }> };
 type NavGroup = { label: string; items: NavItem[]; roles?: Array<"admin" | "registrar" | "department_head"> };
@@ -98,12 +99,12 @@ export function AppSidebar() {
     <Sidebar collapsible="icon" aria-label="Main navigation">
       <SidebarHeader className="border-b border-sidebar-border">
         <div className="flex items-center gap-3 px-2 py-3">
-          <div className="grid size-9 shrink-0 place-items-center rounded-md bg-gold text-gold-foreground font-bold">
-            U
+          <div className="grid size-9 shrink-0 place-items-center overflow-hidden rounded-md bg-white">
+            <img src={ugvLogo.url} alt="University of Global Village crest" className="size-8 object-contain" />
           </div>
           <div className="min-w-0 group-data-[collapsible=icon]:hidden">
-            <p className="truncate text-sm font-semibold text-sidebar-foreground">UGV Barishal</p>
-            <p className="truncate text-xs text-sidebar-foreground/60">Student Portal</p>
+            <p className="truncate text-sm font-semibold text-sidebar-foreground">University of Global Village</p>
+            <p className="truncate text-xs text-sidebar-foreground/60">Student Portal · Barishal</p>
           </div>
         </div>
       </SidebarHeader>
