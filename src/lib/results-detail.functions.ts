@@ -157,7 +157,7 @@ export const getStudentResultsDetail = createServerFn({ method: "GET" })
     }
 
     // Chronological order for ordinals
-    const TERM_ORDER: Record<string, number> = { SPRING: 0, SUMMER: 1, FALL: 2 };
+    const TERM_ORDER: Record<string, number> = { SPRING: 0, SUMMER: 1, FALL: 2, WINTER: 3 };
     const chrono = [...bySem.values()].sort((a, b) => {
       if (a.meta.year !== b.meta.year) return a.meta.year - b.meta.year;
       return (TERM_ORDER[a.meta.term] ?? 9) - (TERM_ORDER[b.meta.term] ?? 9);

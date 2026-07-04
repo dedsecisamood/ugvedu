@@ -1139,7 +1139,7 @@ export type Database = {
       payment_status: "PAID" | "PARTIAL" | "OVERDUE"
       registration_status: "PENDING" | "APPROVED" | "REJECTED"
       semester_result_status: "GENERATED" | "BLOCKED"
-      semester_term: "SPRING" | "SUMMER" | "FALL"
+      semester_term: "SPRING" | "SUMMER" | "FALL" | "WINTER"
       student_status:
         | "ACTIVE"
         | "PROBATION"
@@ -1280,7 +1280,7 @@ export const Constants = {
       payment_status: ["PAID", "PARTIAL", "OVERDUE"],
       registration_status: ["PENDING", "APPROVED", "REJECTED"],
       semester_result_status: ["GENERATED", "BLOCKED"],
-      semester_term: ["SPRING", "SUMMER", "FALL"],
+      semester_term: ["SPRING", "SUMMER", "FALL", "WINTER"],
       student_status: [
         "ACTIVE",
         "PROBATION",
