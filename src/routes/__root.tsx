@@ -92,6 +92,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "UGV Barishal — Student Portal" },
+      { name: "description", content: "Sign in to the University of Global Village, Barishal student portal. Courses, results, notices, payments and academic tools in one place." },
+      { property: "og:description", content: "Sign in to the University of Global Village, Barishal student portal. Courses, results, notices, payments and academic tools in one place." },
+      { name: "twitter:description", content: "Sign in to the University of Global Village, Barishal student portal. Courses, results, notices, payments and academic tools in one place." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/750adb12-79bd-4a6d-9fdc-e1668052fe87/id-preview-e56392c2--49f263ce-b77a-4918-a02c-56f940e0f735.lovable.app-1783190427993.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/750adb12-79bd-4a6d-9fdc-e1668052fe87/id-preview-e56392c2--49f263ce-b77a-4918-a02c-56f940e0f735.lovable.app-1783190427993.png" },
     ],
     links: [
       {
