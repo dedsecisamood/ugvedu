@@ -21,6 +21,7 @@ import {
   SidebarMenuItem, SidebarRail,
 } from "@/components/ui/sidebar";
 import { getMyRoles } from "@/lib/roles.functions";
+import ugvLogo from "@/assets/ugv-logo.png.asset.json";
 
 type NavItem = { title: string; url: string; icon: React.ComponentType<{ className?: string }> };
 type NavGroup = { label: string; items: NavItem[]; roles?: Array<"admin" | "registrar" | "department_head"> };
