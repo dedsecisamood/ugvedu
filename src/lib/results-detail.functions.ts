@@ -132,9 +132,15 @@ export const getStudentResultsDetail = createServerFn({ method: "GET" })
         semesters: { id: string; name: string; year: number; term: string };
         courses: { code: string; title: string; credits: number | string };
       };
-      grades: { letter_grade: string | null; is_fail: boolean | null; is_incomplete: boolean | null }[] | null;
+      grades:
+        | { letter_grade: string | null; is_fail: boolean | null; is_incomplete: boolean | null }
+        | { letter_grade: string | null; is_fail: boolean | null; is_incomplete: boolean | null }[]
+        | null;
     };
     const typed = (rows ?? []) as unknown as Row[];
+
+    const gradeOf = (row: Row) =>
+      Array.isArray(row.grades) ? row.grades[0] : row.grades;
 
     // Group by semester
     const bySem = new Map<string, {
@@ -143,7 +149,7 @@ export const getStudentResultsDetail = createServerFn({ method: "GET" })
     }>();
     for (const r of typed) {
       const co = r.course_offerings;
-      const g = r.grades?.[0];
+      const g = gradeOf(r);
       const gp = g?.letter_grade ? gradePointOf.get(g.letter_grade) ?? null : null;
       const bucket = bySem.get(co.semester_id) ?? { meta: co.semesters, rows: [] };
       bucket.rows.push({ ...r, gp });
@@ -162,21 +168,21 @@ export const getStudentResultsDetail = createServerFn({ method: "GET" })
         enrollmentId: r.id,
         credits: r.course_offerings.courses.credits,
         gradePoint: r.gp,
-        letterGrade: r.grades?.[0]?.letter_grade ?? null,
-        isIncomplete: !!r.grades?.[0]?.is_incomplete,
+        letterGrade: gradeOf(r)?.letter_grade ?? null,
+        isIncomplete: !!gradeOf(r)?.is_incomplete,
         status: (r.status as EnrollmentInput["status"]) ?? "COMPLETED",
       }));
       const res = calculateSemesterResult({ semesterId: bucket.meta.id, enrollments });
       const blocking = bucket.rows
         .filter((r) => {
-          const g = r.grades?.[0];
+          const g = gradeOf(r);
           if (!g) return false;
           return g.is_incomplete || (g.letter_grade ?? "").toUpperCase() === "F";
         })
         .map((r) => ({
           code: r.course_offerings.courses.code,
           title: r.course_offerings.courses.title,
-          reason: (r.grades?.[0]?.is_incomplete ? "I" : "F") as "F" | "I",
+          reason: (gradeOf(r)?.is_incomplete ? "I" : "F") as "F" | "I",
         }));
 
       const courses: ResultsCourseRow[] = bucket.rows
@@ -185,10 +191,10 @@ export const getStudentResultsDetail = createServerFn({ method: "GET" })
           code: r.course_offerings.courses.code,
           title: r.course_offerings.courses.title,
           credits: Number(r.course_offerings.courses.credits),
-          letterGrade: r.grades?.[0]?.letter_grade ?? null,
+          letterGrade: gradeOf(r)?.letter_grade ?? null,
           gradePoint: r.gp,
-          isFail: !!r.grades?.[0]?.is_fail,
-          isIncomplete: !!r.grades?.[0]?.is_incomplete,
+          isFail: !!gradeOf(r)?.is_fail,
+          isIncomplete: !!gradeOf(r)?.is_incomplete,
         }))
         .sort((a, b) => a.code.localeCompare(b.code));
 
@@ -213,8 +219,8 @@ export const getStudentResultsDetail = createServerFn({ method: "GET" })
         enrollmentId: r.id,
         credits: r.course_offerings.courses.credits,
         gradePoint: r.gp,
-        letterGrade: r.grades?.[0]?.letter_grade ?? null,
-        isIncomplete: !!r.grades?.[0]?.is_incomplete,
+        letterGrade: gradeOf(r)?.letter_grade ?? null,
+        isIncomplete: !!gradeOf(r)?.is_incomplete,
         status: (r.status as EnrollmentInput["status"]) ?? "COMPLETED",
       })),
     }));
