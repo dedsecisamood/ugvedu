@@ -145,7 +145,7 @@ function SemesterCard({ semester, defaultOpen }: { semester: ResultsSemester; de
             <Badge variant="destructive" className="uppercase tracking-wide">Result not generated</Badge>
           ) : semester.status === "GENERATED" && semester.sgpa ? (
             <Badge className="bg-gold text-primary-foreground hover:bg-gold">
-              SGPA {semester.sgpa}
+              CGPA {semester.sgpa}
             </Badge>
           ) : (
             <Badge variant="outline">No data</Badge>
