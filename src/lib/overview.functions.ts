@@ -44,6 +44,11 @@ export type OverviewData = {
     departmentCode: string | null;
     programName: string | null;
     currentSemesterName: string | null;
+    admissionSemesterName: string | null;
+    section: string | null;
+    studentGroup: string | null;
+    photoSignedUrl: string | null;
+    registrationDeadline: string | null;
   } | null;
   cgpa: number | null;
   latestSemester: {
@@ -95,6 +100,19 @@ export const getOverview = createServerFn({ method: "GET" })
 
     if (!student) return empty;
 
+    // Profile row for section, group, photo, deadline
+    const { data: prof } = await supabase
+      .from("profiles")
+      .select("photo_url, section, student_group, registration_deadline")
+      .eq("id", userId)
+      .maybeSingle();
+
+    let photoSignedUrl: string | null = null;
+    if (prof?.photo_url) {
+      const { data: sig } = await supabase.storage.from("avatars").createSignedUrl(prof.photo_url, 60 * 60);
+      photoSignedUrl = sig?.signedUrl ?? null;
+    }
+
     const studentBlock = {
       userId: student.user_id,
       studentId: student.student_id,
@@ -105,10 +123,25 @@ export const getOverview = createServerFn({ method: "GET" })
         (student as unknown as { programs: { name: string } | null }).programs?.name ?? null,
       currentSemesterName:
         (student as unknown as { semesters: { name: string } | null }).semesters?.name ?? null,
+      admissionSemesterName: null as string | null,
+      section: prof?.section ?? null,
+      studentGroup: prof?.student_group ?? null,
+      photoSignedUrl,
+      registrationDeadline: prof?.registration_deadline ?? null,
     };
     const requiredCredits =
       (student as unknown as { programs: { total_credits_required: number } | null }).programs
         ?.total_credits_required ?? null;
+
+    // Admission session name
+    const { data: adm } = await supabase
+      .from("students")
+      .select("admission:semesters!students_admission_semester_id_fkey(name)")
+      .eq("user_id", userId)
+      .maybeSingle();
+    studentBlock.admissionSemesterName =
+      (adm as unknown as { admission: { name: string } | null } | null)?.admission?.name ?? null;
+
 
     // 2. Semester results → CGPA + latest semester status
     const { data: results } = await supabase
