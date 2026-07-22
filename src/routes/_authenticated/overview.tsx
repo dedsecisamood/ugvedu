@@ -217,11 +217,11 @@ function Overview() {
             <div className="grid grid-cols-2 gap-3 border-t border-border pt-3 text-xs">
               <div>
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Strongest</p>
-                <p className="mt-0.5 font-semibold text-emerald-600 dark:text-emerald-400">● Affective · {affective}%</p>
+                <p className="mt-0.5 font-semibold text-rose-600 dark:text-rose-400">● Cognitive · {cognitive}%</p>
               </div>
               <div>
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Needs focus</p>
-                <p className="mt-0.5 font-semibold text-sky-600 dark:text-sky-400">● Psychomotor · {psychomotor}%</p>
+                <p className="mt-0.5 font-semibold text-violet-600 dark:text-violet-400">● Affective · {affective}%</p>
               </div>
             </div>
             <div className="mt-3 flex items-start gap-2 rounded-lg border border-amber-400/50 bg-amber-50 p-2 text-[11px] text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200">
