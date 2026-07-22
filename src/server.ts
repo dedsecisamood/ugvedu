@@ -84,7 +84,7 @@ function applySecurityHeaders(response: Response, request: Request): Response {
     "base-uri 'self'",
     "frame-ancestors 'none'",
     "object-src 'none'",
-    "img-src 'self' data: blob:",
+    `img-src 'self' data: blob: ${supabaseHost ? `https://${supabaseHost}` : ""}`.trim(),
     "font-src 'self' data:",
     // TSS injects a small inline bootstrap script for hydration; keeping
     // 'unsafe-inline' on script-src is required for the framework and is
