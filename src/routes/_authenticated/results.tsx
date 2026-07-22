@@ -68,6 +68,7 @@ function ResultsPage() {
   }
 
   const { student, cgpa, totalEntries, semesterCount, semesters } = data;
+  const blockedSems = semesters.filter((s) => s.status === "BLOCKED");
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
@@ -76,6 +77,20 @@ function ResultsPage() {
         title="My Results"
         subtitle="Semester-wise breakdown, SGPA, and CGPA."
       />
+
+      {blockedSems.length > 0 && (
+        <div role="alert" className="flex items-start gap-3 rounded-xl border border-destructive/40 bg-destructive text-destructive-foreground p-4 shadow-sm">
+          <AlertTriangle className="mt-0.5 size-5 shrink-0" aria-hidden />
+          <div className="text-sm">
+            <p className="font-semibold">Academic alert — result withheld</p>
+            <p className="mt-1 opacity-90">
+              F or I grade found in {blockedSems.map((s) => s.semesterName).join(", ")}. CGPA is
+              unavailable until resolved. Please contact your Department Head immediately.
+            </p>
+          </div>
+        </div>
+      )}
+
 
       <section aria-label="Summary" className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <StatCard label="Entries" value={String(totalEntries)} hint="Course records" icon={<ListChecks className="size-5" aria-hidden />} />
