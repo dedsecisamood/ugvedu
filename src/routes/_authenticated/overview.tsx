@@ -66,7 +66,7 @@ function Overview() {
   const affective = 46;
   const psychomotor = 52;
   const overall = Math.round((cognitive + affective + psychomotor) / 3);
-  const attendance = 56;
+  const attendance = 27;
 
   return (
     <div className="mx-auto max-w-7xl space-y-5">
