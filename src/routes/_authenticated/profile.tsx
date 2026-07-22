@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   AlertTriangle, Building2, Calendar, CalendarClock, CircleUser, Fingerprint,
-  GraduationCap, Hash, Home, IdCard, Layers, Loader2, Lock, Mail, MapPin,
+  GraduationCap, Home, IdCard, Layers, Loader2, Lock, Mail, MapPin,
   Phone, Save, ShieldCheck, Smartphone, User, UserRound, Users,
 } from "lucide-react";
 import { toast } from "sonner";
