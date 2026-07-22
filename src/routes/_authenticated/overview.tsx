@@ -70,24 +70,7 @@ function Overview() {
 
   return (
     <div className="mx-auto max-w-7xl space-y-5">
-      {/* Deadline banner */}
-      {deadline && (
-        <div className="rounded-xl border border-amber-400/60 bg-amber-50 p-4 text-amber-900 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="mt-0.5 size-5 shrink-0" aria-hidden />
-            <div className="text-sm">
-              <p className="font-semibold">Register before {deadline}</p>
-              <p className="mt-1 text-amber-900/80 dark:text-amber-200/80">
-                If you do not complete semester registration before the deadline, the following will apply:
-              </p>
-              <ul className="mt-2 list-disc space-y-1 pl-5 text-amber-900/80 dark:text-amber-200/80">
-                <li>A registration fine will be added to your ledger.</li>
-                <li>Your access to classrooms will be removed.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Deadline banner moved to bottom of page */}
 
       {/* Academic alert — result withheld */}
       {isBlocked && (
