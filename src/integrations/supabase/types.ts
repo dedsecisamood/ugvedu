@@ -776,43 +776,85 @@ export type Database = {
       profiles: {
         Row: {
           address: string | null
+          admission_date: string | null
+          application_code: string | null
           created_at: string
           department: string | null
           emergency_contact_name: string | null
           emergency_contact_phone: string | null
+          father_name: string | null
+          father_phone: string | null
           full_name: string | null
+          gender: string | null
           id: string
           is_active: boolean
+          mother_name: string | null
+          national_id: string | null
+          permanent_address: string | null
           phone: string | null
           photo_url: string | null
+          present_address: string | null
+          registration_deadline: string | null
+          registration_number: string | null
+          religion: string | null
+          section: string | null
+          student_group: string | null
           student_id: string | null
           updated_at: string
         }
         Insert: {
           address?: string | null
+          admission_date?: string | null
+          application_code?: string | null
           created_at?: string
           department?: string | null
           emergency_contact_name?: string | null
           emergency_contact_phone?: string | null
+          father_name?: string | null
+          father_phone?: string | null
           full_name?: string | null
+          gender?: string | null
           id: string
           is_active?: boolean
+          mother_name?: string | null
+          national_id?: string | null
+          permanent_address?: string | null
           phone?: string | null
           photo_url?: string | null
+          present_address?: string | null
+          registration_deadline?: string | null
+          registration_number?: string | null
+          religion?: string | null
+          section?: string | null
+          student_group?: string | null
           student_id?: string | null
           updated_at?: string
         }
         Update: {
           address?: string | null
+          admission_date?: string | null
+          application_code?: string | null
           created_at?: string
           department?: string | null
           emergency_contact_name?: string | null
           emergency_contact_phone?: string | null
+          father_name?: string | null
+          father_phone?: string | null
           full_name?: string | null
+          gender?: string | null
           id?: string
           is_active?: boolean
+          mother_name?: string | null
+          national_id?: string | null
+          permanent_address?: string | null
           phone?: string | null
           photo_url?: string | null
+          present_address?: string | null
+          registration_deadline?: string | null
+          registration_number?: string | null
+          religion?: string | null
+          section?: string | null
+          student_group?: string | null
           student_id?: string | null
           updated_at?: string
         }
