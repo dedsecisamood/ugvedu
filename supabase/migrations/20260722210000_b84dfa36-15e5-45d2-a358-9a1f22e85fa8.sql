@@ -1,0 +1,1 @@
+UPDATE public.profiles SET photo_url='55555555-5555-5555-5555-555555555501/profile.jpg', student_group='A' WHERE id='55555555-5555-5555-5555-555555555501';
