@@ -104,7 +104,7 @@ export function AppSidebar() {
           </div>
           <div className="min-w-0 group-data-[collapsible=icon]:hidden">
             <p className="truncate text-sm font-semibold text-sidebar-foreground">University of Global Village</p>
-            <p className="truncate text-xs text-sidebar-foreground/60">Student Portal · Barishal</p>
+            <p className="truncate text-xs text-sidebar-foreground/60">Student Portal</p>
           </div>
         </div>
       </SidebarHeader>

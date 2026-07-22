@@ -21,7 +21,13 @@ async function fetchMe(): Promise<Profile | null> {
     .from("profiles")
     .select("full_name, student_id, photo_url")
     .eq("id", uid).maybeSingle();
-  return data as Profile | null;
+  if (!data) return null;
+  let signed: string | null = null;
+  if (data.photo_url) {
+    const { data: s } = await supabase.storage.from("avatars").createSignedUrl(data.photo_url, 3600);
+    signed = s?.signedUrl ?? null;
+  }
+  return { ...(data as Profile), photo_url: signed };
 }
 
 export function UserMenu() {
