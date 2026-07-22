@@ -44,6 +44,11 @@ export type OverviewData = {
     departmentCode: string | null;
     programName: string | null;
     currentSemesterName: string | null;
+    admissionSemesterName: string | null;
+    section: string | null;
+    studentGroup: string | null;
+    photoSignedUrl: string | null;
+    registrationDeadline: string | null;
   } | null;
   cgpa: number | null;
   latestSemester: {
