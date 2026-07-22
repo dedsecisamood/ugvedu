@@ -216,10 +216,6 @@ function HeroPanel() {
       <div className="pointer-events-none absolute right-24 bottom-24 h-24 w-24 rounded-full bg-gold/20 blur-2xl" />
 
       <div className="relative">
-        <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/90 ring-1 ring-white/20 backdrop-blur">
-          <span className="h-1.5 w-1.5 rounded-full bg-gold" />
-          Student Portal · Barishal
-        </span>
 
         <h1 className="mt-5 text-3xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
           Everything you need
