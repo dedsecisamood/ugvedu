@@ -265,10 +265,8 @@ function PersonalTab({
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
           <Field icon={User} label="Full name"><ReadValue value={initial.fullName} /></Field>
           <Field icon={IdCard} label="Roll number"><ReadValue value={initial.studentId} /></Field>
-          <Field icon={Hash} label="Registration number"><ReadValue value={initial.registrationNumber} /></Field>
-          <Field icon={Fingerprint} label="Application code"><ReadValue value={initial.applicationCode} /></Field>
           <div className="md:col-span-2">
-            <Field icon={IdCard} label="National ID (NID)"><ReadValue value={initial.nationalId} /></Field>
+            <Field icon={Fingerprint} label="Application code"><ReadValue value={initial.applicationCode} /></Field>
           </div>
         </div>
 
