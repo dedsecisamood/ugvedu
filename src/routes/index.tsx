@@ -71,7 +71,9 @@ function UtilityBar() {
         </nav>
 
         <a
-          href="/"
+          href="https://ugv.edu.bd/"
+          target="_blank"
+          rel="noopener noreferrer"
           className="flex items-center gap-3 md:justify-self-center"
           aria-label="University of Global Village"
         >
