@@ -62,9 +62,9 @@ function Overview() {
   const deadline = fmtDeadline(student.registrationDeadline);
 
   // Static Bloom's Taxonomy progress (not tracked in DB yet — matches spec)
-  const cognitive = 68;
-  const affective = 46;
-  const psychomotor = 52;
+  const cognitive = 31;
+  const affective = 21;
+  const psychomotor = 24;
   const overall = Math.round((cognitive + affective + psychomotor) / 3);
   const attendance = 27;
 
