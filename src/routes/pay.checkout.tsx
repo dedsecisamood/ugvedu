@@ -65,7 +65,10 @@ function SandboxCheckout() {
     // the webhook-recorded status becomes visible to RLS.
     navigate({
       to: "/payments",
-      search: { tran_id: search.tranId, gateway_status: outcome.toLowerCase() },
+      search: {
+        tran_id: search.tranId,
+        gateway_status: outcome.toLowerCase() as "valid" | "failed" | "cancelled",
+      },
     });
   }
 
