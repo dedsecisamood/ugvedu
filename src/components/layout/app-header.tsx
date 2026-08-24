@@ -1,7 +1,5 @@
 /** Top app header: sidebar trigger, search input, register CTA, bell, user menu. */
-import { Link } from "@tanstack/react-router";
 import { Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { NotificationBell } from "./notification-bell";
@@ -31,12 +29,6 @@ export function AppHeader() {
       </form>
 
       <div className="ml-auto flex items-center gap-1 sm:gap-2">
-        <Button
-          asChild
-          className="min-h-11 bg-gold text-gold-foreground hover:bg-gold/90 focus-visible:ring-gold"
-        >
-          <Link to="/registrations">Register</Link>
-        </Button>
         <NotificationBell />
         <UserMenu />
       </div>
