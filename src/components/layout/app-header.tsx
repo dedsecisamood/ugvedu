@@ -31,12 +31,6 @@ export function AppHeader() {
       </form>
 
       <div className="ml-auto flex items-center gap-1 sm:gap-2">
-        <Button
-          asChild
-          className="min-h-11 bg-gold text-gold-foreground hover:bg-gold/90 focus-visible:ring-gold"
-        >
-          <Link to="/registrations">Register</Link>
-        </Button>
         <NotificationBell />
         <UserMenu />
       </div>
