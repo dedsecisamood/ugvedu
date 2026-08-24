@@ -1,7 +1,5 @@
 /** Top app header: sidebar trigger, search input, register CTA, bell, user menu. */
-import { Link } from "@tanstack/react-router";
 import { Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { NotificationBell } from "./notification-bell";
